@@ -1,7 +1,12 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        in_memory:
+            memory:
+                users:
+                    neko:
+                        password: $2y$12$2X4.tqnCpc4zgPkCA.t/KOg602UeUacl.P1iPCkIooW2b4lrsJaae
+                        roles: 'ROLE_AUTHOR'
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -11,8 +16,14 @@ security:
 
             # activate different ways to authenticate
 
-            # http_basic: ~
+            http_basic: ~
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
             # https://symfony.com/doc/current/security/form_login_setup.html
+    access_control:
+        - { path: /upload/, roles: ROLE_AUTHOR }
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
