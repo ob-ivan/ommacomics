@@ -6,6 +6,18 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% block auth %}
+            <div class="auth">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    Hello, {{ app.user.username }}!
+                    (<a href="/logout">Log out</a>)
+                {% else %}
+                    <a href="/signup">Sign up</a>
+                    or
+                    <a href="/login">Log in</a>
+                {% endif %}
+            </div>
+        {% endblock %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
