@@ -29,7 +29,7 @@ security:
                 path:   /logout
                 target: /
     access_control:
-        - { path: /upload/, roles: ROLE_AUTHOR }
+        - { path: /upload, roles: ROLE_AUTHOR }
     encoders:
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt

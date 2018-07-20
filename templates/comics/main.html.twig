@@ -2,9 +2,11 @@
 
 {% block body %}
     <h1>OmmaComics</h1>
-    <div>
-        <a href="{{ path('upload') }}">Upload new chapter</a>
-    </div>
+    {% if is_granted('ROLE_AUTHOR') %}
+        <div>
+            <a href="{{ path('upload') }}">Upload new chapter</a>
+        </div>
+    {% endif %}
     <h2>Recent chapters</h2>
     <div>TODO</div>
     <h2>My chapters</h2>
