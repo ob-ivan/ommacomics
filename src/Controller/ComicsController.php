@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Chapter;
 use App\Form\ChapterType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
