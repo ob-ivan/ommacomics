@@ -2,6 +2,11 @@
 
 {% block body %}
     <h1>Upload new chapter</h1>
+    {# NEW #}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    {# OLD #}
     <form method="POST" enctype="multipart/form-data">
         <div>
             <label>
@@ -11,4 +16,5 @@
         </div>
         <button>Upload</button>
     </form>
+    {# END #}
 {% endblock %}
