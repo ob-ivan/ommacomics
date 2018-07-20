@@ -15,7 +15,7 @@ class ComicsController extends Controller
     }
 
     /**
-     * @Route("/upload")
+     * @Route("/upload", name="upload")
      */
     public function upload()
     {

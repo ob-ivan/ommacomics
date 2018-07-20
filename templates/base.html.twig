@@ -10,11 +10,11 @@
             <div class="auth">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     Hello, {{ app.user.username }}!
-                    (<a href="/logout">Log out</a>)
+                    (<a href="{{ logout_path() }}">Log out</a>)
                 {% else %}
                     <a href="/signup">Sign up</a>
                     or
-                    <a href="/login">Log in</a>
+                    <a href="{{ path('login') }}">Log in</a>
                 {% endif %}
             </div>
         {% endblock %}
