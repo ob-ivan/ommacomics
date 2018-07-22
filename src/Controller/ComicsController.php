@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Chapter;
 use App\Form\ChapterType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -30,6 +31,7 @@ class ComicsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
+
             $folderName = $this->generateUniqueFileName();
             $archiveName = $folderName . '.' . $file->guessExtension();
             $file->move(
@@ -38,6 +40,7 @@ class ComicsController extends Controller
             );
             // TODO: Unzip
             $chapter->setFolder($folderName);
+            $chapter->setCreateDate(new DateTime());
             $entityManager->persist($chapter);
             $entityManager->flush();
             return $this->redirect($this->generateUrl('chapter_view'));

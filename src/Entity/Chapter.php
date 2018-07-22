@@ -40,12 +40,12 @@ class Chapter
         return $this->id;
     }
 
-    public function getFolder(): ?string
+    public function getFolder()
     {
         return $this->folder;
     }
 
-    public function setFolder(string $folder): self
+    public function setFolder($folder): self
     {
         $this->folder = $folder;
 
