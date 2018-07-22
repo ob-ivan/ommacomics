@@ -36,14 +36,20 @@ class ComicsController extends Controller
                 $this->getParameter('chapter_directory'),
                 $archiveName
             );
+            // TODO: Unzip
             $chapter->setFolder($folderName);
             $entityManager->persist($chapter);
             $entityManager->flush();
-            return $this->redirect($this->generateUrl('view_chapter'));
+            return $this->redirect($this->generateUrl('chapter_view'));
         }
 
         return $this->render('comics/upload.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function generateUniqueFileName()
+    {
+        return date('Ymd-His-') . base64_encode(random_bytes(2));
     }
 }
