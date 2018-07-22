@@ -5,10 +5,12 @@ use App\Entity\Chapter;
 use App\Form\ChapterType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use ZipArchive;
 
 class ComicsController extends Controller
 {
@@ -31,14 +33,8 @@ class ComicsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
-
             $folderName = $this->generateUniqueFileName();
-            $archiveName = $folderName . '.' . $file->guessExtension();
-            $file->move(
-                $this->getParameter('chapter_directory'),
-                $archiveName
-            );
-            // TODO: Unzip
+            $this->unzip($file, $folderName);
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
             $entityManager->persist($chapter);
@@ -65,5 +61,17 @@ class ComicsController extends Controller
     private function generateUniqueFileName()
     {
         return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
+    }
+
+    private function unzip(
+        SplFileInfo $file,
+        string $chapterDirectory,
+        string $folderName
+    ) {
+        $zip = new ZipArchive();
+        $zip->open($file->getRealPath());
+        $zip->extractTo("$chapterDirectory/$folderName");
+        $zip->close();
+        // TODO: Traverse subfolders.
     }
 }
