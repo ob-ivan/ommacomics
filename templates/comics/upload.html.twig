@@ -2,13 +2,7 @@
 
 {% block body %}
     <h1>Upload new chapter</h1>
-    <form method="POST" enctype="multipart/form-data">
-        <div>
-            <label>
-                <span>Select ZIP archive:</span>
-                <input type="file" name="zip"/>
-            </label>
-        </div>
-        <button>Upload</button>
-    </form>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}
