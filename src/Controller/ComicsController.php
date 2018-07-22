@@ -43,11 +43,22 @@ class ComicsController extends Controller
             $chapter->setCreateDate(new DateTime());
             $entityManager->persist($chapter);
             $entityManager->flush();
-            return $this->redirect($this->generateUrl('chapter_view'));
+            return $this->redirect($this->generateUrl('read', [
+                'folder' => $folderName,
+            ]));
         }
 
         return $this->render('comics/upload.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/read/{folder}", name="read")
+     */
+    public function read()
+    {
+        return $this->render('comics/read.html.twig', [
         ]);
     }
 
