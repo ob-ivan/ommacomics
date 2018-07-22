@@ -53,6 +53,6 @@ class ComicsController extends Controller
 
     private function generateUniqueFileName()
     {
-        return date('Ymd-His-') . base64_encode(random_bytes(2));
+        return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
     }
 }
