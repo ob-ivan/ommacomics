@@ -34,7 +34,7 @@ class ComicsController extends Controller
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
-            $this->unzip($file, $folderName);
+            $this->unzip($file, $this->getParameter('chapter_directory'), $folderName);
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
             $entityManager->persist($chapter);
