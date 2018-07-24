@@ -11,4 +11,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-/chapters/
+/public/chapters/

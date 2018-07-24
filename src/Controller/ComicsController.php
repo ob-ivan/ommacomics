@@ -56,9 +56,22 @@ class ComicsController extends Controller
     /**
      * @Route("/read/{folder}", name="read")
      */
-    public function read()
+    public function read($folder)
     {
+        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
+        if (!is_dir($fullFolderPath)) {
+            return $this->render('comics/error.html.twig', [
+                'message' => 'Unknown folder ' . $folder,
+            ]);
+        }
         return $this->render('comics/read.html.twig', [
+            'folder' => $folder,
+            'files' => array_filter(
+                scandir($fullFolderPath),
+                function ($fileName) use ($fullFolderPath) {
+                    return is_file("$fullFolderPath/$fileName");
+                }
+            ),
         ]);
     }
 

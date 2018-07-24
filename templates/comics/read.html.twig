@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% for file in files %}
+        <img src="/chapters/{{ folder }}/{{ file }}"/>
+    {% endfor %}
 {% endblock %}

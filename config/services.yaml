@@ -2,7 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    chapter_directory: '%kernel.project_dir%/chapters'
+    chapter_directory: '%kernel.project_dir%/public/chapters'
 
 services:
     # default configuration for services in *this* file
