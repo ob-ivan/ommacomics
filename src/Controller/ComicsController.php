@@ -31,6 +31,11 @@ class ComicsController extends Controller
      */
     public function upload(EntityManagerInterface $entityManager, Request $request)
     {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'Uploading chapter is only available for authors'
+        );
         $chapter = new Chapter();
         $form = $this->createForm(ChapterType::class, $chapter);
         $form->handleRequest($request);
@@ -56,12 +61,26 @@ class ComicsController extends Controller
     /**
      * @Route("/read/{folder}", name="read")
      */
-    public function read($folder)
+    public function read($folder, EntityManagerInterface $entityManager)
     {
+        $chapter = $entityManager->getRepository(Chapter::class)
+            ->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->render('comics/error.html.twig', [
+                'message' => 'Unknown chapter ' . $folder,
+            ]);
+        }
+        if (!$chapter->getIsPublic()) {
+            $this->denyAccessUnlessGranted(
+                'ROLE_AUTHOR',
+                null,
+                'You are not allowed to read this chapter'
+            );
+        }
         $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
         if (!is_dir($fullFolderPath)) {
             return $this->render('comics/error.html.twig', [
-                'message' => 'Unknown folder ' . $folder,
+                'message' => 'Folder not found for chapter ' . $folder,
             ]);
         }
         return $this->render('comics/read.html.twig', [

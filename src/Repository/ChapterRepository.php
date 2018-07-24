@@ -36,15 +36,13 @@ class ChapterRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Chapter
+    public function findOneByFolder($folder): ?Chapter
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.folder = :folder')
+            ->setParameter('folder', $folder)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
 }
