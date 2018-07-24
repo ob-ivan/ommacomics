@@ -5,9 +5,13 @@ use App\Entity\Chapter;
 use App\Form\ChapterType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use ZipArchive;
@@ -70,8 +74,25 @@ class ComicsController extends Controller
     ) {
         $zip = new ZipArchive();
         $zip->open($file->getRealPath());
-        $zip->extractTo("$chapterDirectory/$folderName");
+        $destination = "$chapterDirectory/$folderName";
+        $zip->extractTo($destination);
         $zip->close();
-        // TODO: Traverse subfolders.
+        // Move files from subfolders to the top.
+        $subfiles = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $destination,
+                FilesystemIterator::SKIP_DOTS | FilesystemIterator::CURRENT_AS_PATHNAME
+            ),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($subfiles as $absPath) {
+            if (is_dir($absPath)) {
+                // Should be safe, as directories are walked last.
+                rmdir($absPath);
+                continue;
+            }
+            $subfile = new File($absPath);
+            $subfile->move($destination);
+        }
     }
 }
