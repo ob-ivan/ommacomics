@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block menu_home %}
+{% endblock %}
+
 {% block body %}
     <h1>OmmaComics</h1>
     {% if is_granted('ROLE_AUTHOR') %}

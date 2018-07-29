@@ -19,7 +19,7 @@ use ZipArchive;
 class ComicsController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="main")
      */
     public function main()
     {
