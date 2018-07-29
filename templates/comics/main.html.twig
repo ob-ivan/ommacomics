@@ -18,10 +18,22 @@
             <p>No published chapters yet!</p>
             <p>
                 Be the first to publish a chapter:
-                <a href="{{ path('upload') }}">upload a chapter</a>
+                <a href="{{ path('upload') }}">publish a chapter</a>
             </p>
         {% endfor %}
     </div>
-    <h2>My chapters</h2>
-    <div>TODO</div>
+    {% if is_granted('ROLE_AUTHOR') %}
+        <h2>My chapters</h2>
+        <div>
+            {% for chapter in privateChapters %}
+                TODO
+            {% else %}
+                <p>No uploaded chapters yet!</p>
+                <p>
+                    It's okay, you can fix that here:
+                    <a href="{{ path('upload') }}">upload a chapter</a>
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

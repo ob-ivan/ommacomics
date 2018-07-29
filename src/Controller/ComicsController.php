@@ -23,13 +23,17 @@ class ComicsController extends Controller
      */
     public function main(EntityManagerInterface $entityManager)
     {
-        $publicChapters = $entityManager->getRepository(Chapter::class)
-            ->findByIsPublic(true);
-        // TODO: get private chapters
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $publicChapters = $chapterRepository->findByIsPublic(true);
+        $privateChapters = [];
+        if ($this->isGranted('ROLE_AUTHOR')) {
+            $privateChapters = $chapterRepository->findByIsPublic(false);
+        }
         return $this->render(
             'comics/main.html.twig',
             [
                 'publicChapters' => $publicChapters,
+                'privateChapters' => $privateChapters,
             ]
         );
     }
