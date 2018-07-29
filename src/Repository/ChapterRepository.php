@@ -19,22 +19,23 @@ class ChapterRepository extends ServiceEntityRepository
         parent::__construct($registry, Chapter::class);
     }
 
-//    /**
-//     * @return Chapter[] Returns an array of Chapter objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Return all public chapters or all private chapters.
+     *
+     * @param bool $isPublic Whether to return public chapters or private
+     * @return Chapter[] Returns an array of Chapter objects
+     */
+    public function findByIsPublic(bool $isPublic)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->andWhere('c.isPublic = :isPublic')
+            ->setParameter('isPublic', $isPublic)
+            ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     public function findOneByFolder($folder): ?Chapter
     {

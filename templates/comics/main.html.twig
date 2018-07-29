@@ -11,7 +11,17 @@
         </div>
     {% endif %}
     <h2>Recent chapters</h2>
-    <div>TODO</div>
+    <div>
+        {% for chapter in publicChapters %}
+            TODO
+        {% else %}
+            <p>No published chapters yet!</p>
+            <p>
+                Be the first to publish a chapter:
+                <a href="{{ path('upload') }}">upload a chapter</a>
+            </p>
+        {% endfor %}
+    </div>
     <h2>My chapters</h2>
     <div>TODO</div>
 {% endblock %}

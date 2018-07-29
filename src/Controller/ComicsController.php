@@ -21,9 +21,17 @@ class ComicsController extends Controller
     /**
      * @Route("/", name="main")
      */
-    public function main()
+    public function main(EntityManagerInterface $entityManager)
     {
-        return $this->render('comics/main.html.twig');
+        $publicChapters = $entityManager->getRepository(Chapter::class)
+            ->findByIsPublic(true);
+        // TODO: get private chapters
+        return $this->render(
+            'comics/main.html.twig',
+            [
+                'publicChapters' => $publicChapters,
+            ]
+        );
     }
 
     /**
