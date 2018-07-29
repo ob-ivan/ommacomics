@@ -3,7 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <style>
+                .menu {
+                    display: flex;
+                    justify-content: space-evenly;
+                    width: 100%;
+                }
+                .menu_item_auth {
+                    margin-left: auto;
+                }
+            </style>
+        {% endblock %}
     </head>
     <body>
         {% block menu %}
@@ -13,18 +24,16 @@
                         <a href="{{ path('main') }}">Main page</a>
                     </div>
                 {% endblock %}
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <div class="menu_item">
+                <div class="menu_item menu_item_auth">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         Hello, {{ app.user.username }}!
                         (<a href="{{ logout_path() }}">Log out</a>)
-                    </div>
-                {% else %}
-                    <div class="menu_item">
+                    {% else %}
                         <a href="/signup">Sign up</a>
                         or
                         <a href="{{ path('login') }}">Log in</a>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         {% endblock %}
         {% block body %}{% endblock %}
