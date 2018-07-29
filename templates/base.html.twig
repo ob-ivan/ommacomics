@@ -5,7 +5,16 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <style>
+                body {
+                    margin: 0;
+                }
+                .main {
+                    margin: 0 auto;
+                    max-width: 800px;
+                    width: 100%;
+                }
                 .menu {
+                    border-bottom: 1px solid black;
                     display: flex;
                     justify-content: space-evenly;
                     width: 100%;
@@ -17,26 +26,33 @@
         {% endblock %}
     </head>
     <body>
-        {% block menu %}
-            <div class="menu">
-                {% block menu_home %}
-                    <div class="menu_item">
-                        <a href="{{ path('main') }}">Main page</a>
+        {% block body %}
+            <div class="main">
+                {% block menu %}
+                    <div class="menu">
+                        {% block menu_home %}
+                            <div class="menu_item">
+                                <a href="{{ path('main') }}">Main page</a>
+                            </div>
+                        {% endblock %}
+                        {% block menu_auth %}
+                        <div class="menu_item menu_item_auth">
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                Hello, {{ app.user.username }}!
+                                (<a href="{{ logout_path() }}">Log out</a>)
+                            {% else %}
+                                <a href="/signup">Sign up</a>
+                                or
+                                <a href="{{ path('login') }}">Log in</a>
+                            {% endif %}
+                        </div>
+                        {% endblock %}
                     </div>
                 {% endblock %}
-                <div class="menu_item menu_item_auth">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        Hello, {{ app.user.username }}!
-                        (<a href="{{ logout_path() }}">Log out</a>)
-                    {% else %}
-                        <a href="/signup">Sign up</a>
-                        or
-                        <a href="{{ path('login') }}">Log in</a>
-                    {% endif %}
-                </div>
+                {% block main %}
+                {% endblock %}
             </div>
         {% endblock %}
-        {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>
