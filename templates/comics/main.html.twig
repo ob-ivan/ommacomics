@@ -1,5 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <style>
+        .chapter_list {
+            width: 400px;
+        }
+        .chapter_list_item {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    {{ parent() }}
+{% endblock %}
+
 {% block menu_home %}
 {% endblock %}
 
@@ -12,15 +25,30 @@
     {% endif %}
     <h2>Recent chapters</h2>
     <div>
-        {% for chapter in publicChapters %}
-            TODO
+        {% if publicChapters is not empty %}
+            <ul class="chapter_list">
+                {% for chapter in publicChapters %}
+                    <li>
+                        <div class="chapter_list_item">
+                            <div>
+                                <a href="{{ path('read', { folder: chapter.folder }) }}">
+                                    {{ chapter.folder }}
+                                </a>
+                            </div>
+                            <div>
+                                {{ chapter.createDate.format('Y-m-d H:i:s') }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         {% else %}
             <p>No published chapters yet!</p>
             <p>
                 Be the first to publish a chapter:
                 <a href="{{ path('upload') }}">publish a chapter</a>
             </p>
-        {% endfor %}
+        {% endif %}
     </div>
     {% if is_granted('ROLE_AUTHOR') %}
         <h2>My chapters</h2>
