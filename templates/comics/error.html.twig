@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <style>
         .error {
             border: 5px dashed red;
@@ -9,7 +10,6 @@
             width: 80%;
         }
     </style>
-    {{ parent() }}
 {% endblock %}
 
 {% block main %}

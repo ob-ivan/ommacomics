@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <style>
         .chapter_list {
-            width: 400px;
+            width: 80%;
         }
         .chapter_list_item {
             display: flex;
             justify-content: space-between;
         }
     </style>
-    {{ parent() }}
 {% endblock %}
 
 {% block menu_home %}
