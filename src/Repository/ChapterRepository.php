@@ -29,6 +29,7 @@ class ChapterRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.isPublic = :isPublic')
+            ->andWhere('c.isDeleted = false')
             ->setParameter('isPublic', $isPublic)
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)
