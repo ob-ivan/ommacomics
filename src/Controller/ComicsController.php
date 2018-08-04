@@ -77,7 +77,7 @@ class ComicsController extends Controller
     {
         $chapter = $entityManager->getRepository(Chapter::class)
             ->findOneByFolder($folder);
-        if (!$chapter) {
+        if (!$chapter || $chapter->getIsDeleted()) {
             return $this->render('comics/error.html.twig', [
                 'message' => 'Unknown chapter ' . $folder,
             ]);
