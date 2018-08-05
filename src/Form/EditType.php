@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class EditType extends AbstractType
 {
@@ -18,11 +20,16 @@ class EditType extends AbstractType
                 'label' => 'Publish now? (The chapter will be available to anyone.)',
                 'required' => false,
             ])
-            ->add('isDeleted', CheckboxType::class, [
-                'label' => 'Delete chapter? (The chapter will not be available any more.)',
-                'required' => false,
-            ])
             ->add('save', SubmitType::class)
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $chapter = $event->getData();
+                $form = $event->getForm();
+                if ($chapter->getIsDeleted()) {
+                    $form->add('restore', SubmitType::class);
+                } else {
+                    $form->add('delete', SubmitType::class);
+                }
+            })
         ;
     }
 

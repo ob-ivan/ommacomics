@@ -123,6 +123,10 @@ class ComicsController extends Controller
         $form = $this->createForm(EditType::class, $chapter);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            switch ($form->getClickedButton()->getName()) {
+                case 'delete':  $chapter->setIsDeleted(true);  break;
+                case 'restore': $chapter->setIsDeleted(false); break;
+            }
             $entityManager->persist($chapter);
             $entityManager->flush();
             return $this->redirect($this->generateUrl('edit', [
