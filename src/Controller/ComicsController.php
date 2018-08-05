@@ -2,7 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Chapter;
-use App\Form\ChapterType;
+use App\Form\EditType;
+use App\Form\UploadType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FilesystemIterator;
@@ -46,10 +47,10 @@ class ComicsController extends Controller
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
-            'Uploading chapter is only available for authors'
+            'Uploading a chapter is only available for authors'
         );
         $chapter = new Chapter();
-        $form = $this->createForm(ChapterType::class, $chapter);
+        $form = $this->createForm(UploadType::class, $chapter);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
@@ -78,9 +79,7 @@ class ComicsController extends Controller
         $chapter = $entityManager->getRepository(Chapter::class)
             ->findOneByFolder($folder);
         if (!$chapter || $chapter->getIsDeleted()) {
-            return $this->render('comics/error.html.twig', [
-                'message' => 'Unknown chapter ' . $folder,
-            ]);
+            return $this->renderUnknownChapterError($folder);
         }
         if (!$chapter->getIsPublic()) {
             $this->denyAccessUnlessGranted(
@@ -103,6 +102,36 @@ class ComicsController extends Controller
                     return is_file("$fullFolderPath/$fileName");
                 }
             ),
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{folder}", name="edit")
+     */
+    public function edit($folder, EntityManagerInterface $entityManager, Request $request)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'Editing a chapter is only available for authors'
+        );
+        $chapter = $entityManager->getRepository(Chapter::class)
+            ->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->renderUnknownChapterError($folder);
+        }
+        $form = $this->createForm(EditType::class, $chapter);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($chapter);
+            $entityManager->flush();
+            return $this->redirect($this->generateUrl('edit', [
+                'folder' => $folder,
+            ]));
+        }
+
+        return $this->render('comics/edit.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -138,5 +167,12 @@ class ComicsController extends Controller
             $subfile = new File($absPath);
             $subfile->move($destination);
         }
+    }
+
+    private function renderUnknownChapterError($folder)
+    {
+        return $this->render('comics/error.html.twig', [
+            'message' => 'Unknown chapter ' . $folder,
+        ]);
     }
 }

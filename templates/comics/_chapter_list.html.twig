@@ -13,6 +13,11 @@
                 <div>
                     {{ chapter.createDate.format('Y-m-d H:i:s') }}
                 </div>
+                <div>
+                    <a href="{{ path('edit', { folder: chapter.folder }) }}">
+                        Edit
+                    </a>
+                </div>
             </div>
         </li>
     {% endfor %}
