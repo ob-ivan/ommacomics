@@ -3,12 +3,15 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .chapter_list {
+        .chapter-list {
             width: 80%;
         }
-        .chapter_list_item {
+        .chapter-list__item {
             display: flex;
             justify-content: space-between;
+        }
+        .chapter-list__name {
+            width: 300px;
         }
     </style>
 {% endblock %}

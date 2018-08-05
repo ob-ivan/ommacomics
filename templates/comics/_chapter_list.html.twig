@@ -1,11 +1,11 @@
 {#
     chapters
 #}
-<ul class="chapter_list">
+<ul class="chapter-list">
     {% for chapter in chapters %}
         <li>
-            <div class="chapter_list_item">
-                <div>
+            <div class="chapter-list__item">
+                <div class="chapter-list__name">
                     <a href="{{ path('read', { folder: chapter.folder }) }}">
                         {{ chapter.folder }}
                     </a>
