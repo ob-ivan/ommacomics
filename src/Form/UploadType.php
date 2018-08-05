@@ -27,6 +27,7 @@ class UploadType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Chapter::class,
+            'validation_groups' => ['upload'],
         ]);
     }
 }

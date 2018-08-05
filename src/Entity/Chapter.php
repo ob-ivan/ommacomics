@@ -20,8 +20,8 @@ class Chapter
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Assert\NotBlank(message="Select ZIP file")
-     * @Assert\File(mimeTypes={ "application/zip" })
+     * @Assert\NotBlank(message="Select ZIP file", groups={ "upload" })
+     * @Assert\File(mimeTypes={ "application/zip" }, groups={ "upload" })
      */
     private $folder;
 
