@@ -1,7 +1,24 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .flash-info {
+            border: 1px solid red;
+            background: yellow;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+{% endblock %}
+
 {% block main %}
     <h1>Edit chapter</h1>
+    {% for message in app.flashes('info') %}
+        <div class="flash-info">
+            {{ message }}
+        </div>
+    {% endfor %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}

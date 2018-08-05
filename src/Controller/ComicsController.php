@@ -123,12 +123,22 @@ class ComicsController extends Controller
         $form = $this->createForm(EditType::class, $chapter);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            switch ($form->getClickedButton()->getName()) {
+            $action = $form->getClickedButton()->getName();
+            switch ($action) {
                 case 'delete':  $chapter->setIsDeleted(true);  break;
                 case 'restore': $chapter->setIsDeleted(false); break;
             }
             $entityManager->persist($chapter);
             $entityManager->flush();
+            $message = '';
+            switch ($action) {
+                case 'save':    $message = 'Your changes were saved.'; break;
+                case 'delete':  $message = 'The chapter has been deleted.'; break;
+                case 'restore': $message = 'You have restored the chapter.'; break;
+            }
+            if ($message) {
+                $this->addFlash('info', $message);
+            }
             return $this->redirect($this->generateUrl('edit', [
                 'folder' => $folder,
             ]));
