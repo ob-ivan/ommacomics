@@ -1,17 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        img {
-            display: block;
-            width: 100%;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     {% for file in files %}
-        <img src="/chapters/{{ folder }}/{{ file }}"/>
+        <img class="read-image" src="/chapters/{{ folder }}/{{ file }}"/>
     {% endfor %}
 {% endblock %}
