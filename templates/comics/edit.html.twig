@@ -6,3 +6,17 @@
     {{ form_widget(form) }}
     {{ form_end(form) }}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let deleteButton = document.getElementById('edit_delete');
+        if (deleteButton) {
+            deleteButton.addEventListener(
+                'click',
+                e => window.confirm('Are you sure you want to delete this chapter?') ||
+                    e.preventDefault()
+            );
+        }
+    </script>
+{% endblock %}
