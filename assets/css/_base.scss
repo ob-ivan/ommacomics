@@ -1,0 +1,23 @@
+
+body {
+    background-color: lightgray;
+    font-size: 3vmin;
+    margin: 0;
+}
+
+.main {
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
+}
+
+.menu {
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menu_item_auth {
+    margin-left: auto;
+}

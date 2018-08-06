@@ -1,0 +1,10 @@
+.chapter-list {
+    width: 80%;
+}
+.chapter-list__item {
+    display: flex;
+    justify-content: space-between;
+}
+.chapter-list__name {
+    width: 300px;
+}
