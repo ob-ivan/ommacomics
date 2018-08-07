@@ -3,37 +3,39 @@
 {% block menu_home %}
 {% endblock %}
 
-{% block main %}
-    <h1>OmmaComics</h1>
-    {% if is_granted('ROLE_AUTHOR') %}
-        <div>
-            <a href="{{ path('upload') }}">Upload new chapter</a>
-        </div>
-    {% endif %}
-    <h2>Recent chapters</h2>
-    <div>
-        {% if publicChapters is not empty %}
-            {{ include('comics/_chapter_list.html.twig', { chapters: publicChapters }) }}
-        {% else %}
-            <p>No published chapters yet!</p>
-            <p>
-                Be the first to publish a chapter:
-                <a href="{{ path('upload') }}">publish a chapter</a>
-            </p>
+{% block content %}
+    <div class="text-content">
+        <h1>OmmaComics</h1>
+        {% if is_granted('ROLE_AUTHOR') %}
+            <div>
+                <a href="{{ path('upload') }}">Upload new chapter</a>
+            </div>
         {% endif %}
-    </div>
-    {% if is_granted('ROLE_AUTHOR') %}
-        <h2>My chapters</h2>
+        <h2>Recent chapters</h2>
         <div>
-            {% if privateChapters is not empty %}
-                {{ include('comics/_chapter_list.html.twig', { chapters: privateChapters }) }}
+            {% if publicChapters is not empty %}
+                {{ include('comics/_chapter_list.html.twig', { chapters: publicChapters }) }}
             {% else %}
-                <p>No uploaded chapters yet!</p>
+                <p>No published chapters yet!</p>
                 <p>
-                    It's okay, you can fix that here:
-                    <a href="{{ path('upload') }}">upload a chapter</a>
+                    Be the first to publish a chapter:
+                    <a href="{{ path('upload') }}">publish a chapter</a>
                 </p>
             {% endif %}
         </div>
-    {% endif %}
+        {% if is_granted('ROLE_AUTHOR') %}
+            <h2>My chapters</h2>
+            <div>
+                {% if privateChapters is not empty %}
+                    {{ include('comics/_chapter_list.html.twig', { chapters: privateChapters }) }}
+                {% else %}
+                    <p>No uploaded chapters yet!</p>
+                    <p>
+                        It's okay, you can fix that here:
+                        <a href="{{ path('upload') }}">upload a chapter</a>
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

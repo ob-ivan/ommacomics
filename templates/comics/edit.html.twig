@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block main %}
-    <h1>Edit chapter</h1>
-    {% for message in app.flashes('info') %}
-        <div class="flash-info">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+{% block content %}
+    <div class="text-content">
+        <h1>Edit chapter</h1>
+        {% for message in app.flashes('info') %}
+            <div class="flash-info">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}

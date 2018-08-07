@@ -1,23 +1,40 @@
 
+$width: 1000px;
+$pad: 20px;
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: lightgray;
     font-size: 3vmin;
     margin: 0;
 }
 
-.main {
-    margin: 0 auto;
-    max-width: 800px;
-    width: 100%;
-}
-
 .menu {
-    border-bottom: 1px solid black;
     display: flex;
     justify-content: space-between;
+    margin: 0 auto;
+    max-width: $width + 2 * $pad;
+    padding: 0 $pad;
+}
+
+.menu__item.menu__item_auth {
+    margin-left: auto;
+}
+
+.menu-hr {
+    border-top: 1px solid black;
+    margin: 0 auto;
+    max-width: $width;
     width: 100%;
 }
 
-.menu_item_auth {
-    margin-left: auto;
+.content {
+    margin: 0 auto;
+    max-width: $width;
+}
+
+.text-content {
+    padding: $pad;
 }

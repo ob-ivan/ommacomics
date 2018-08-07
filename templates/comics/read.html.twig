@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block content %}
     {% for file in files %}
         <img class="read-image" src="/chapters/{{ folder }}/{{ file }}"/>
     {% endfor %}
