@@ -59,6 +59,10 @@ class ComicsController extends Controller
             $this->unzip($file, $this->getParameter('chapter_directory'), $folderName);
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
+
+            // @todo: This should be a default value somewhere in Chapter or UploadType!
+            $chapter->setIsDeleted(false);
+
             $entityManager->persist($chapter);
             $entityManager->flush();
             return $this->redirect($this->generateUrl('read', [
