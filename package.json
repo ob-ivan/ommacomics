@@ -14,7 +14,13 @@
         "build": "encore production"
     },
     "dependencies": {
+        "cryptiles": "^4.1.2",
+        "fstream": "^1.0.12",
+        "hoek": "^4.2.1",
+        "js-yaml": "^3.13.1",
+        "lodash": "^4.17.13",
         "lodash.mergewith": "^4.6.2",
-        "mem": "^4.0.0"
+        "mem": "^4.0.0",
+        "webpack-dev-server": "^3.1.11"
     }
 }
