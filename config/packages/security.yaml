@@ -32,5 +32,5 @@ security:
         - { path: /upload, roles: ROLE_AUTHOR }
     encoders:
         Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
+            algorithm: auto
             cost: 12
