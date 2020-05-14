@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Chapter;
 use App\Form\EditType;
 use App\Form\UploadType;
+use App\Repository\ChapterRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FilesystemIterator;
@@ -24,6 +25,7 @@ class ComicsController extends AbstractController
      */
     public function main(EntityManagerInterface $entityManager)
     {
+        /** @var ChapterRepository $chapterRepository */
         $chapterRepository = $entityManager->getRepository(Chapter::class);
         $publicChapters = $chapterRepository->findByIsPublic(true);
         $privateChapters = [];
