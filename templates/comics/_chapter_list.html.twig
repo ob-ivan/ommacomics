@@ -7,7 +7,7 @@
             <div class="chapter-list__item">
                 <div class="chapter-list__name">
                     <a href="{{ path('read', { folder: chapter.folder }) }}">
-                        {{ chapter.folder }}
+                        {{ chapter.displayName ?? chapter.folder }}
                     </a>
                 </div>
                 <div>
