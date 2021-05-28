@@ -1,7 +1,4 @@
 {
-    "composer/ca-bundle": {
-        "version": "1.1.0"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -91,15 +88,6 @@
     },
     "psr/log": {
         "version": "1.0.2"
-    },
-    "sensiolabs/security-checker": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "e65a105bf4cd5b1b79012ba029954927f05922e8"
-        }
     },
     "symfony/asset": {
         "version": "v4.1.3"
