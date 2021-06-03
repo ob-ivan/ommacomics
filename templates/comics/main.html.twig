@@ -8,7 +8,7 @@
         <h1>OmmaComics</h1>
         {% if is_granted('ROLE_AUTHOR') %}
             <div>
-                <a href="{{ path('upload') }}">Upload new chapter</a>
+                <a href="{{ path('upload') }}">Upload a new chapter</a>
             </div>
         {% endif %}
         <h2>Recent chapters</h2>
