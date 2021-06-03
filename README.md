@@ -8,3 +8,7 @@ A web-comics hosting engine.
 - Edit the display name of a chapter.
 - Publish uploaded chapters for the readers.
 - Soft-delete a chapter. (However, a chapter cannot be restored via the GUI yet.)
+
+## Development
+
+- This project uses `npm` to manage JavaScript dependencies. 
