@@ -155,6 +155,22 @@ class ComicsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/recycle-bin", name="recycle-bin")
+     */
+    public function recycleBin(EntityManagerInterface $entityManager)
+    {
+        /** @var ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $deletedChapters = $chapterRepository->findByIsDeleted();
+        return $this->render(
+            'comics/recycleBin.html.twig',
+            [
+                'deletedChapters' => $deletedChapters,
+            ]
+        );
+    }
+
     private function generateUniqueFileName()
     {
         return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
