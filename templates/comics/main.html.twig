@@ -9,6 +9,7 @@
         {% if is_granted('ROLE_AUTHOR') %}
             <div>
                 <a href="{{ path('upload') }}">Upload a new chapter</a>
+                <a href="{{ path('recycle-bin') }}">View the recycle bin</a>
             </div>
         {% endif %}
         <h2>Recent chapters</h2>
