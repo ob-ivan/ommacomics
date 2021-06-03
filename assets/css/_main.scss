@@ -1,4 +1,14 @@
 
+.author-action {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    &__item {
+        padding: 1em;
+    }
+}
+
 .chapter-list {
     width: 80%;
 
