@@ -34,6 +34,9 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
+    // https://symfony.com/blog/encore-0-21-0-webpack-4-support-copy-files-support-webpackencorebundle#new-runtime-js-file
+    .enableSingleRuntimeChunk()
+
     // enables Sass/SCSS support
     .enableSassLoader()
 
