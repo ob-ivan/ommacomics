@@ -176,6 +176,31 @@ class ComicsController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/restore/{folder}", name="restore")
+     */
+    public function restore($folder, EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'The recycle bin is only available for authors'
+        );
+        $chapter = $entityManager->getRepository(Chapter::class)
+            ->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->renderUnknownChapterError($folder);
+        }
+        $chapter->setIsDeleted(false);
+        $entityManager->persist($chapter);
+        $entityManager->flush();
+        $message = 'You have restored the chapter.';
+        $this->addFlash('info', $message);
+        return $this->redirect($this->generateUrl('edit', [
+            'folder' => $folder,
+        ]));
+    }
+
     private function generateUniqueFileName()
     {
         return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
