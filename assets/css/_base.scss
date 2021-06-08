@@ -7,9 +7,12 @@ $width: 1000px;
 }
 
 body {
-    font-size: 3vmin;
     margin: 0;
     text-size-adjust: 100%;
+}
+
+body, button, input {
+    font-size: 3vmin;
 }
 
 .menu {
