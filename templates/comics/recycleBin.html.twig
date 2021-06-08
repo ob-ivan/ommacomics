@@ -5,7 +5,7 @@
         <h1>Recycle bin</h1>
         <div>
             {% if deletedChapters is not empty %}
-                {{ include('comics/_chapter_list.html.twig', { chapters: deletedChapters }) }}
+                {{ include('comics/_chapter_list.html.twig', { chapters: deletedChapters, actions: ['restore'] }) }}
             {% else %}
                 <p>Your recycle bin is empty!</p>
             {% endif %}

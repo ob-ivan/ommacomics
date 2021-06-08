@@ -15,7 +15,7 @@
         <h2>Recent chapters</h2>
         <div>
             {% if publicChapters is not empty %}
-                {{ include('comics/_chapter_list.html.twig', { chapters: publicChapters }) }}
+                {{ include('comics/_chapter_list.html.twig', { chapters: publicChapters, actions: [] }) }}
             {% else %}
                 <p>No published chapters yet!</p>
                 <p>
@@ -28,7 +28,7 @@
             <h2>My chapters</h2>
             <div>
                 {% if privateChapters is not empty %}
-                    {{ include('comics/_chapter_list.html.twig', { chapters: privateChapters }) }}
+                    {{ include('comics/_chapter_list.html.twig', { chapters: privateChapters, actions: ['edit'] }) }}
                 {% else %}
                     <p>No uploaded chapters yet!</p>
                     <p>

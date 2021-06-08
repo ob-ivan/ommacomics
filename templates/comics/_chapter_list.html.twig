@@ -1,4 +1,5 @@
 {#
+    actions: string[]
     chapters
 #}
 <ul class="chapter-list">
@@ -13,11 +14,13 @@
                 <div>
                     {{ chapter.createDate.format('Y-m-d H:i:s') }}
                 </div>
-                <div>
-                    <a href="{{ path('edit', { folder: chapter.folder }) }}">
-                        Edit
-                    </a>
-                </div>
+                {% for action in actions %}
+                    <div>
+                        <a href="{{ path(action, { folder: chapter.folder }) }}">
+                            {{ action }}
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </li>
     {% endfor %}
