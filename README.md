@@ -15,5 +15,6 @@ A web-comics hosting engine.
 
 ## Deployment
 
+- `git pull`
 - `npm ci`
 - `npm run build`
