@@ -160,6 +160,11 @@ class ComicsController extends AbstractController
      */
     public function recycleBin(EntityManagerInterface $entityManager)
     {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'The recycle bin is only available for authors'
+        );
         /** @var ChapterRepository $chapterRepository */
         $chapterRepository = $entityManager->getRepository(Chapter::class);
         $deletedChapters = $chapterRepository->findByIsDeleted();
