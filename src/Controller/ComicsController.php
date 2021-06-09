@@ -224,9 +224,10 @@ class ComicsController extends AbstractController
                 'message' => 'Cannot purge a chapter that is not deleted!',
             ]);
         }
-        // TODO: Remove the chapter from the database.
+        $entityManager->remove($chapter);
+        $entityManager->flush();
         $filesystem = new Filesystem();
-        $filesystem->remove($this->getChapterFolderAbsolutePath($chapter->getFolder()));
+        $filesystem->remove($this->getChapterFolderAbsolutePath($folder));
         // TODO: Add a flash message.
         return $this->redirect($this->generateUrl('main'));
     }
