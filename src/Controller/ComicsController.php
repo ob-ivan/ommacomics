@@ -12,6 +12,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -211,7 +212,9 @@ class ComicsController extends AbstractController
             null,
             'Purging a chapter is only available for authors'
         );
-        $chapter = $entityManager->getRepository(Chapter::class)
+        /** @type ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $chapter = $chapterRepository
             ->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
@@ -222,7 +225,9 @@ class ComicsController extends AbstractController
             ]);
         }
         // TODO: Remove the chapter from the database.
-        // TODO: Remove the files from the file system.
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->getChapterFolderAbsolutePath($chapter->getFolder()));
+        // TODO: Add a flash message.
         return $this->redirect($this->generateUrl('main'));
     }
 
