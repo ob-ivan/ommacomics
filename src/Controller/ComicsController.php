@@ -59,7 +59,8 @@ class ComicsController extends AbstractController
             $file = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
             $chapterDirectory = $this->getParameter('chapter_directory');
-            $this->unzip($file, $chapterDirectory, $folderName);
+            $destination = $chapterDirectory . '/' . $folderName;
+            $this->unzip($file, $destination);
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
 
@@ -234,12 +235,10 @@ class ComicsController extends AbstractController
 
     private function unzip(
         SplFileInfo $file,
-        string $chapterDirectory,
-        string $folderName
+        string $destination
     ) {
         $zip = new ZipArchive();
         $zip->open($file->getRealPath());
-        $destination = $chapterDirectory . '/' . $folderName;
         $zip->extractTo($destination);
         $zip->close();
         // Move files from subfolders to the top.
