@@ -195,8 +195,7 @@ class ComicsController extends AbstractController
         $chapter->setIsDeleted(false);
         $entityManager->persist($chapter);
         $entityManager->flush();
-        $message = 'You have restored the chapter.';
-        $this->addFlash('info', $message);
+        $this->addFlash('info', 'You have restored the chapter.');
         return $this->redirect($this->generateUrl('edit', [
             'folder' => $folder,
         ]));
