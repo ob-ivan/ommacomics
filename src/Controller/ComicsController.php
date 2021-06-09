@@ -58,9 +58,7 @@ class ComicsController extends AbstractController
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
-            $chapterDirectory = $this->getParameter('chapter_directory');
-            $destination = $chapterDirectory . '/' . $folderName;
-            $this->unzip($file, $destination);
+            $this->unzip($file, $this->getParameter('chapter_directory') . '/' . $folderName);
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
 
