@@ -7,7 +7,7 @@
             {% if deletedChapters is not empty %}
                 {{ include(
                     'comics/_chapter_list.html.twig',
-                    { chapters: deletedChapters, actions: ['restore', 'edit'] }
+                    { chapters: deletedChapters, actions: ['restore', 'purge', 'edit'] }
                 ) }}
             {% else %}
                 <p>Your recycle bin is empty!</p>

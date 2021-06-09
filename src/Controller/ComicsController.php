@@ -184,7 +184,7 @@ class ComicsController extends AbstractController
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
-            'The recycle bin is only available for authors'
+            'Restoring a chapter is only available for authors'
         );
         $chapter = $entityManager->getRepository(Chapter::class)
             ->findOneByFolder($folder);
@@ -199,6 +199,31 @@ class ComicsController extends AbstractController
         return $this->redirect($this->generateUrl('edit', [
             'folder' => $folder,
         ]));
+    }
+
+    /**
+     * @Route("/purge/{folder}", name="purge")
+     */
+    public function purge($folder, EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'Purging a chapter is only available for authors'
+        );
+        $chapter = $entityManager->getRepository(Chapter::class)
+            ->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->renderUnknownChapterError($folder);
+        }
+        if (!$chapter->getIsDeleted()) {
+            return $this->render('comics/error.html.twig', [
+                'message' => 'Cannot purge a chapter that is not deleted!',
+            ]);
+        }
+        // TODO: Remove the chapter from the database.
+        // TODO: Remove the files from the file system.
+        return $this->redirect($this->generateUrl('main'));
     }
 
     private function generateUniqueFileName()
