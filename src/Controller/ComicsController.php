@@ -233,10 +233,8 @@ class ComicsController extends AbstractController
         return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
     }
 
-    private function unzip(
-        SplFileInfo $file,
-        string $destination
-    ) {
+    private function unzip(SplFileInfo $file, string $destination)
+    {
         $zip = new ZipArchive();
         $zip->open($file->getRealPath());
         $zip->extractTo($destination);
