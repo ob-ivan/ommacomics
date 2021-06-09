@@ -227,7 +227,7 @@ class ComicsController extends AbstractController
         $entityManager->flush();
         $filesystem = new Filesystem();
         $filesystem->remove($this->getChapterFolderAbsolutePath($folder));
-        // TODO: Add a flash message.
+        $this->addFlash('info', 'You have purged the chapter.');
         return $this->redirect($this->generateUrl('main'));
     }
 
