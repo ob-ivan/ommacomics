@@ -58,7 +58,7 @@ class ComicsController extends AbstractController
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
-            $this->unzip($file, $this->getParameter('chapter_directory') . '/' . $folderName);
+            $this->unzip($file, $this->getChapterFolderAbsolutePath($folderName));
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
 
@@ -261,5 +261,10 @@ class ComicsController extends AbstractController
         return $this->render('comics/error.html.twig', [
             'message' => 'Unknown chapter ' . $folder,
         ]);
+    }
+
+    private function getChapterFolderAbsolutePath(string $folderName): string
+    {
+        return $this->getParameter('chapter_directory') . '/' . $folderName;
     }
 }
