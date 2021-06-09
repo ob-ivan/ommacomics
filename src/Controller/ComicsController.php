@@ -238,7 +238,7 @@ class ComicsController extends AbstractController
     ) {
         $zip = new ZipArchive();
         $zip->open($file->getRealPath());
-        $destination = "$chapterDirectory/$folderName";
+        $destination = $chapterDirectory . '/' . $folderName;
         $zip->extractTo($destination);
         $zip->close();
         // Move files from subfolders to the top.
