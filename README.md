@@ -11,7 +11,8 @@ A web-comics hosting engine.
 
 ## Development
 
-- This project uses `npm` to manage JavaScript dependencies. 
+- This project uses `npm` to manage JavaScript dependencies.
+- Please use `npm run dev` and `npm run watch` to create development builds.
 
 ## Deployment
 
