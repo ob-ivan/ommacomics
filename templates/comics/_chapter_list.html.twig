@@ -1,8 +1,13 @@
 {#
     actions: string[]
-    chapters
+    chapters: {
+        folder: string
+        displayName?: string
+        createDate: DateTime
+    }[]
     links?: string[]
 #}
+
 <ul class="chapter-list">
     {% for chapter in chapters %}
         <li>
