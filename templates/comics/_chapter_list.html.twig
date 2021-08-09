@@ -1,6 +1,7 @@
 {#
     actions: string[]
     chapters
+    links?: string[]
 #}
 <ul class="chapter-list">
     {% for chapter in chapters %}
@@ -18,6 +19,13 @@
                     <div>
                         <a href="{{ path(action, { folder: chapter.folder }) }}">
                             {{ action }}
+                        </a>
+                    </div>
+                {% endfor %}
+                {% for link in links ?? [] %}
+                    <div>
+                        <a href="{{ path(link, { folder: chapter.folder }) }}">
+                            {{ link }}
                         </a>
                     </div>
                 {% endfor %}
