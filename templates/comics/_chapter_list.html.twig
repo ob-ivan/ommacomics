@@ -25,14 +25,14 @@
                     {{ chapter.createDate.format('Y-m-d H:i:s') }}
                 </div>
                 {% for action in actions ?? [] %}
-                    <div>
-                        <a  class="chapter-list__action"
-                            data-confirmation="{{ action.confirmation }}"
-                            href="{{ path(action.route, { folder: chapter.folder }) }}"
-                        >
-                            {{ action.label }}
-                        </a>
-                    </div>
+                    <button
+                        class="chapter-list__action"
+                        data-action="{{ action.route }}"
+                        data-confirmation="{{ action.confirmation }}"
+                        data-folder="{{ chapter.folder }}"
+                    >
+                        {{ action.label }}
+                    </button>
                 {% endfor %}
                 {% for link in links ?? [] %}
                     <div>
