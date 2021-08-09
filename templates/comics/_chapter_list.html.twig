@@ -22,7 +22,7 @@
                 </div>
                 {% for action in actions ?? [] %}
                     <div>
-                        <a href="{{ path(action, { folder: chapter.folder }) }}">
+                        <a class="chapter-list__action" href="{{ path(action, { folder: chapter.folder }) }}">
                             {{ action }}
                         </a>
                     </div>
