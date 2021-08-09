@@ -1,5 +1,5 @@
 {#
-    actions: string[]
+    actions?: string[]
     chapters: {
         folder: string
         displayName?: string
@@ -20,7 +20,7 @@
                 <div>
                     {{ chapter.createDate.format('Y-m-d H:i:s') }}
                 </div>
-                {% for action in actions %}
+                {% for action in actions ?? [] %}
                     <div>
                         <a href="{{ path(action, { folder: chapter.folder }) }}">
                             {{ action }}
