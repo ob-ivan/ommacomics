@@ -161,22 +161,21 @@ class ComicsController extends AbstractController
                     break;
             }
 
-            $message = '';
             switch ($action) {
                 case 'save':
                     $message = 'Your changes were saved.';
+                    $this->addFlash('info', $message);
                     break;
                 case 'delete':
                     $message = 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.';
+                    $this->addFlash('info', $message);
                     break;
                 case 'restore':
                     $message = 'You have restored the chapter "' . $chapter->getDisplayName() . '".';
+                    $this->addFlash('info', $message);
                     break;
                 default:
                     break;
-            }
-            if ($message) {
-                $this->addFlash('info', $message);
             }
 
             return $this->redirect($this->generateUrl('edit', [
