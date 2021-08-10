@@ -11,6 +11,9 @@
                 <a class="author-action-list__item" href="{{ path('upload') }}">Upload a new chapter</a>
                 <a class="author-action-list__item" href="{{ path('recycle-bin') }}">
                     View the recycle bin
+                    {% if recycleBinCount is not null %}
+                        ({{ recycleBinCount }})
+                    {% endif %}
                 </a>
             </div>
         {% endif %}

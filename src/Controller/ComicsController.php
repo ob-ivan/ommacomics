@@ -30,14 +30,17 @@ class ComicsController extends AbstractController
         $chapterRepository = $entityManager->getRepository(Chapter::class);
         $publicChapters = $chapterRepository->findByIsPublic(true);
         $privateChapters = [];
+        $recycleBinCount = null;
         if ($this->isGranted('ROLE_AUTHOR')) {
             $privateChapters = $chapterRepository->findByIsPublic(false);
+            $recycleBinCount = $chapterRepository->getCountIsDeleted();
         }
         return $this->render(
             'comics/main.html.twig',
             [
-                'publicChapters' => $publicChapters,
+                'publicChapters'  => $publicChapters,
                 'privateChapters' => $privateChapters,
+                'recycleBinCount' => $recycleBinCount,
             ]
         );
     }

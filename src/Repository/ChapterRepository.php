@@ -35,6 +35,20 @@ class ChapterRepository extends ServiceEntityRepository
     }
 
     /**
+     * Return the number of soft-deleted chapters.
+     *
+     * @return int Returns the count of soft-deleted chapters
+     */
+    public function getCountIsDeleted()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->andWhere('c.isDeleted = true')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Return all public chapters or all private chapters.
      *
      * @param bool $isPublic Whether to return public chapters or private
