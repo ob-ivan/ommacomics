@@ -12,7 +12,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        let deleteButton = document.getElementById('edit_delete');
+        const deleteButton = document.getElementById('edit_delete');
         if (deleteButton) {
             deleteButton.addEventListener(
                 'click',
