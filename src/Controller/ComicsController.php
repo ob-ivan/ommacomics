@@ -141,8 +141,8 @@ class ComicsController extends AbstractController
             $message = '';
             switch ($action) {
                 case 'save':    $message = 'Your changes were saved.'; break;
-                case 'delete':  $message = 'The chapter has been deleted.'; break;
-                case 'restore': $message = 'You have restored the chapter.'; break;
+                case 'delete':  $message = 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.'; break;
+                case 'restore': $message = 'You have restored the chapter "' . $chapter->getDisplayName() . '".'; break;
             }
             if ($message) {
                 $this->addFlash('info', $message);
@@ -196,7 +196,7 @@ class ComicsController extends AbstractController
         $chapter->setIsDeleted(false);
         $entityManager->persist($chapter);
         $entityManager->flush();
-        $this->addFlash('info', 'You have restored the chapter.');
+        $this->addFlash('info', 'You have restored the chapter "' . $chapter->getDisplayName() . '".');
         return $this->redirect($this->generateUrl('edit', [
             'folder' => $folder,
         ]));
@@ -224,11 +224,12 @@ class ComicsController extends AbstractController
                 'message' => 'Cannot purge a chapter that is not deleted!',
             ]);
         }
+        $chapterName = $chapter->getDisplayName();
         $entityManager->remove($chapter);
         $entityManager->flush();
         $filesystem = new Filesystem();
         $filesystem->remove($this->getChapterFolderAbsolutePath($folder));
-        $this->addFlash('info', 'You have purged the chapter.');
+        $this->addFlash('info', 'You have purged the chapter "' . $chapterName . '".');
         return $this->redirect($this->generateUrl('main'));
     }
 
