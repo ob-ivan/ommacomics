@@ -137,11 +137,15 @@ class ComicsController extends AbstractController
             $action = $form->getClickedButton()->getName();
 
             switch ($action) {
+                case 'save':
+                    break;
                 case 'delete':
                     $chapter->setIsDeleted(true);
                     break;
                 case 'restore':
                     $chapter->setIsDeleted(false);
+                    break;
+                default:
                     break;
             }
 
@@ -158,6 +162,8 @@ class ComicsController extends AbstractController
                     break;
                 case 'restore':
                     $message = 'You have restored the chapter "' . $chapter->getDisplayName() . '".';
+                    break;
+                default:
                     break;
             }
             if ($message) {
