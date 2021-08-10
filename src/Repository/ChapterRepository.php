@@ -41,7 +41,8 @@ class ChapterRepository extends ServiceEntityRepository
      */
     public function getCountIsDeleted()
     {
-        return $this->createQueryBuilder('c')
+        $queryBuilder = $this->createQueryBuilder('c');
+        return $queryBuilder
             ->select('COUNT(c.id)')
             ->andWhere('c.isDeleted = true')
             ->getQuery()
