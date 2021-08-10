@@ -138,19 +138,28 @@ class ComicsController extends AbstractController
 
             switch ($action) {
                 case 'save':
+
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
+
                     break;
                 case 'delete':
                     $chapter->setIsDeleted(true);
+
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
+
                     break;
                 case 'restore':
                     $chapter->setIsDeleted(false);
+
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
+
                     break;
                 default:
                     break;
             }
-
-            $entityManager->persist($chapter);
-            $entityManager->flush();
 
             $message = '';
             switch ($action) {
