@@ -14,7 +14,9 @@
     <script>
         const deleteButton = document.getElementById('edit_delete');
         if (deleteButton) {
-            const confirmation = 'Are you sure you want to delete this chapter?';
+            const confirmation =
+                'Do you want to move this chapter to the recycle bin?\n' +
+                'The chapter stays in the recycle bin and can be restored at any time.';
             deleteButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
         }
     </script>
