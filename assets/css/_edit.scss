@@ -1,0 +1,9 @@
+
+.edit-delete {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &__button {
+        color: red;
+    }
+}
