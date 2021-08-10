@@ -43,7 +43,7 @@ class ChapterRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('c');
         return $queryBuilder
-            ->select('COUNT(c.id)')
+            ->select($queryBuilder->expr()->count('c.id'))
             ->andWhere('c.isDeleted = true')
             ->getQuery()
             ->getSingleScalarResult();
