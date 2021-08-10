@@ -7,7 +7,7 @@ A web-comics hosting engine.
 - Upload a chapter for your private preview.
 - Edit the display name of a chapter.
 - Publish uploaded chapters for the readers.
-- Soft-delete a chapter. (However, a chapter cannot be restored via the GUI yet.)
+- Move chapters to the recycle bin and remove them permanently from there.
 
 ## Development
 
