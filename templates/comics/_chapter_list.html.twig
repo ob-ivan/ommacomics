@@ -1,5 +1,8 @@
 {#
-    actions?: string[]
+    actions?: {
+        route: string
+        label: string
+    }[]
     chapters: {
         folder: string
         displayName?: string
@@ -22,8 +25,8 @@
                 </div>
                 {% for action in actions ?? [] %}
                     <div>
-                        <a class="chapter-list__action" href="{{ path(action, { folder: chapter.folder }) }}">
-                            {{ action }}
+                        <a class="chapter-list__action" href="{{ path(action.route, { folder: chapter.folder }) }}">
+                            {{ action.label }}
                         </a>
                     </div>
                 {% endfor %}

@@ -13,7 +13,16 @@
                     'comics/_chapter_list.html.twig',
                     {
                         chapters: deletedChapters,
-                        actions: ['restore', 'purge'],
+                        actions: [
+                            {
+                                route: 'restore',
+                                label: 'restore'
+                            },
+                            {
+                                route: 'purge',
+                                label: 'purge'
+                            }
+                        ],
                         links: ['edit'],
                     }
                 ) }}
