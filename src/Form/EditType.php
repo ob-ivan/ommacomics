@@ -31,7 +31,13 @@ class EditType extends AbstractType
                 if ($chapter->getIsDeleted()) {
                     $form->add('restore', SubmitType::class);
                 } else {
-                    $form->add('delete', SubmitType::class, ['attr' => ['class' => 'edit-delete']]);
+                    $form->add(
+                        'delete',
+                        SubmitType::class,
+                        [
+                            'attr' => ['class' => 'edit-delete']
+                        ]
+                    );
                 }
             })
         ;
