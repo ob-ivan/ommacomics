@@ -35,7 +35,8 @@ class EditType extends AbstractType
                         'delete',
                         SubmitType::class,
                         [
-                            'attr' => ['class' => 'edit-delete']
+                            'attr'     => ['class' => 'edit-delete__button'],
+                            'row_attr' => ['class' => 'edit-delete']
                         ]
                     );
                 }
