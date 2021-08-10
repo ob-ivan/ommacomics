@@ -122,8 +122,9 @@ class ComicsController extends AbstractController
             null,
             'Editing a chapter is only available for authors'
         );
-        $chapter = $entityManager->getRepository(Chapter::class)
-            ->findOneByFolder($folder);
+        /** @type ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
         }
