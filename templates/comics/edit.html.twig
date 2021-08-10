@@ -15,11 +15,7 @@
         const deleteButton = document.getElementById('edit_delete');
         if (deleteButton) {
             const confirmation = 'Are you sure you want to delete this chapter?';
-            deleteButton.addEventListener(
-                'click',
-                e => window.confirm(confirmation) ||
-                    e.preventDefault()
-            );
+            deleteButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
         }
     </script>
 {% endblock %}
