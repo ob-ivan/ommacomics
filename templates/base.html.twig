@@ -32,6 +32,11 @@
                 <div class="menu-hr"></div>
             {% endblock %}
             <div class="content">
+                {% for message in app.flashes('info') %}
+                    <div class="flash-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 {% block content %}
                 {% endblock %}
             </div>
