@@ -138,37 +138,20 @@ class ComicsController extends AbstractController
 
             switch ($action) {
                 case 'save':
-
                     $entityManager->persist($chapter);
                     $entityManager->flush();
-
-                    break;
-                case 'delete':
-                    $chapter->setIsDeleted(true);
-
-                    $entityManager->persist($chapter);
-                    $entityManager->flush();
-
-                    break;
-                case 'restore':
-                    $chapter->setIsDeleted(false);
-
-                    $entityManager->persist($chapter);
-                    $entityManager->flush();
-
-                    break;
-                default:
-                    break;
-            }
-
-            switch ($action) {
-                case 'save':
                     $this->addFlash('info', 'Your changes were saved.');
                     break;
                 case 'delete':
+                    $chapter->setIsDeleted(true);
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
                     $this->addFlash('info', 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.');
                     break;
                 case 'restore':
+                    $chapter->setIsDeleted(false);
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
                     $this->addFlash('info', 'You have restored the chapter "' . $chapter->getDisplayName() . '".');
                     break;
                 default:
