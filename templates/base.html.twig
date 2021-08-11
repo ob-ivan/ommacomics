@@ -32,11 +32,19 @@
                 <div class="menu-hr"></div>
             {% endblock %}
             <div class="content">
+                {% for message in app.flashes('info') %}
+                    <div class="flash-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 {% block content %}
                 {% endblock %}
             </div>
         {% endblock %}
         {% block javascripts %}
+            {# https://symfony.com/blog/encore-0-21-0-webpack-4-support-copy-files-support-webpackencorebundle#new-runtime-js-file #}
+            <script src="{{ asset('build/runtime.js') }}"></script>
+
             <script src="{{ asset('build/app.js') }}"></script>
         {% endblock %}
     </body>

@@ -1,6 +1,16 @@
 
+.author-action-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    &__item {
+        padding: 1em;
+    }
+}
+
 .chapter-list {
-    width: 80%;
+    padding: 0 40px;
 
     &__item {
         display: flex;

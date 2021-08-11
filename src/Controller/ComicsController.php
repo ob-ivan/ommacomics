@@ -12,10 +12,13 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Markup;
 use ZipArchive;
 
 class ComicsController extends AbstractController
@@ -29,14 +32,17 @@ class ComicsController extends AbstractController
         $chapterRepository = $entityManager->getRepository(Chapter::class);
         $publicChapters = $chapterRepository->findByIsPublic(true);
         $privateChapters = [];
+        $recycleBinCount = null;
         if ($this->isGranted('ROLE_AUTHOR')) {
             $privateChapters = $chapterRepository->findByIsPublic(false);
+            $recycleBinCount = $chapterRepository->getCountIsDeleted();
         }
         return $this->render(
             'comics/main.html.twig',
             [
-                'publicChapters' => $publicChapters,
+                'publicChapters'  => $publicChapters,
                 'privateChapters' => $privateChapters,
+                'recycleBinCount' => $recycleBinCount,
             ]
         );
     }
@@ -58,7 +64,7 @@ class ComicsController extends AbstractController
             /** @var UploadedFile $file */
             $file = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
-            $this->unzip($file, $this->getParameter('chapter_directory'), $folderName);
+            $this->unzip($file, $this->getChapterFolderAbsolutePath($folderName));
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
 
@@ -114,15 +120,16 @@ class ComicsController extends AbstractController
     /**
      * @Route("/edit/{folder}", name="edit")
      */
-    public function edit($folder, EntityManagerInterface $entityManager, Request $request)
+    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
             'Editing a chapter is only available for authors'
         );
-        $chapter = $entityManager->getRepository(Chapter::class)
-            ->findOneByFolder($folder);
+        /** @type ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
         }
@@ -130,21 +137,23 @@ class ComicsController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $action = $form->getClickedButton()->getName();
+
             switch ($action) {
-                case 'delete':  $chapter->setIsDeleted(true);  break;
-                case 'restore': $chapter->setIsDeleted(false); break;
+                case 'save':
+                    $entityManager->persist($chapter);
+                    $entityManager->flush();
+                    $this->addFlash('info', 'Your changes were saved.');
+                    break;
+                case 'delete':
+                    $this->performDeleteAction($session, $entityManager, $chapter);
+                    break;
+                case 'restore':
+                    $this->performRestoreAction($entityManager, $chapter);
+                    break;
+                default:
+                    break;
             }
-            $entityManager->persist($chapter);
-            $entityManager->flush();
-            $message = '';
-            switch ($action) {
-                case 'save':    $message = 'Your changes were saved.'; break;
-                case 'delete':  $message = 'The chapter has been deleted.'; break;
-                case 'restore': $message = 'You have restored the chapter.'; break;
-            }
-            if ($message) {
-                $this->addFlash('info', $message);
-            }
+
             return $this->redirect($this->generateUrl('edit', [
                 'folder' => $folder,
             ]));
@@ -155,19 +164,89 @@ class ComicsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/recycle-bin", name="recycle-bin")
+     */
+    public function recycleBin(EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'The recycle bin is only available for authors'
+        );
+        /** @var ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $deletedChapters = $chapterRepository->findByIsDeleted();
+        return $this->render(
+            'comics/recycleBin.html.twig',
+            [
+                'deletedChapters' => $deletedChapters,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/restore/{folder}", name="restore")
+     */
+    public function restore($folder, EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'Restoring a chapter is only available for authors'
+        );
+        /** @type ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $chapter = $chapterRepository->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->renderUnknownChapterError($folder);
+        }
+        $this->performRestoreAction($entityManager, $chapter);
+        return $this->redirect($this->generateUrl('edit', [
+            'folder' => $folder,
+        ]));
+    }
+
+    /**
+     * @Route("/purge/{folder}", name="purge")
+     */
+    public function purge($folder, EntityManagerInterface $entityManager)
+    {
+        $this->denyAccessUnlessGranted(
+            'ROLE_AUTHOR',
+            null,
+            'Purging a chapter is only available for authors'
+        );
+        /** @type ChapterRepository $chapterRepository */
+        $chapterRepository = $entityManager->getRepository(Chapter::class);
+        $chapter = $chapterRepository
+            ->findOneByFolder($folder);
+        if (!$chapter) {
+            return $this->renderUnknownChapterError($folder);
+        }
+        if (!$chapter->getIsDeleted()) {
+            return $this->render('comics/error.html.twig', [
+                'message' => 'Cannot purge a chapter that is not deleted!',
+            ]);
+        }
+        $chapterName = $chapter->getDisplayName();
+        $entityManager->remove($chapter);
+        $entityManager->flush();
+        $filesystem = new Filesystem();
+        $filesystem->remove($this->getChapterFolderAbsolutePath($folder));
+        $this->addFlash('info', 'You have purged the chapter "' . $chapterName . '".');
+        return $this->redirect($this->generateUrl('main'));
+    }
+
     private function generateUniqueFileName()
     {
         return date('Ymd-His-') . preg_replace('/\W/', '', base64_encode(random_bytes(6)));
     }
 
-    private function unzip(
-        SplFileInfo $file,
-        string $chapterDirectory,
-        string $folderName
-    ) {
+    private function unzip(SplFileInfo $file, string $destination)
+    {
         $zip = new ZipArchive();
         $zip->open($file->getRealPath());
-        $destination = "$chapterDirectory/$folderName";
         $zip->extractTo($destination);
         $zip->close();
         // Move files from subfolders to the top.
@@ -194,5 +273,41 @@ class ComicsController extends AbstractController
         return $this->render('comics/error.html.twig', [
             'message' => 'Unknown chapter ' . $folder,
         ]);
+    }
+
+    private function getChapterFolderAbsolutePath(string $folderName): string
+    {
+        return $this->getParameter('chapter_directory') . '/' . $folderName;
+    }
+
+    /**
+     * @param SessionInterface $session
+     * @param EntityManagerInterface $entityManager
+     * @param Chapter $chapter
+     */
+    private function performDeleteAction(SessionInterface $session, EntityManagerInterface $entityManager, Chapter $chapter): void
+    {
+        $chapter->setIsDeleted(true);
+        $entityManager->persist($chapter);
+        $entityManager->flush();
+
+        $message = new Markup(
+            $this->renderView('comics/flash/delete.html.twig', ['chapter' => $chapter]),
+            'UTF-8'
+        );
+
+        $session->getFlashBag()->add('info', $message);
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Chapter $chapter
+     */
+    private function performRestoreAction(EntityManagerInterface $entityManager, Chapter $chapter): void
+    {
+        $chapter->setIsDeleted(false);
+        $entityManager->persist($chapter);
+        $entityManager->flush();
+        $this->addFlash('info', 'You have restored the chapter "' . $chapter->getDisplayName() . '".');
     }
 }

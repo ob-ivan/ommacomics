@@ -1,7 +1,18 @@
 
-.flash-info {
-    border: 1px solid red;
-    background: yellow;
-    padding: 10px;
-    margin-bottom: 10px;
+.edit-restore {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &__button {
+        color: orangered;
+    }
+}
+
+.edit-delete {
+    display: flex;
+    flex-direction: row-reverse;
+
+    &__button {
+        color: red;
+    }
 }

@@ -12,3 +12,12 @@ require('../css/app.scss');
 // var $ = require('jquery');
 
 console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+
+document.querySelectorAll('.chapter-list__action').forEach(action =>
+    action.addEventListener('click', event => {
+        if (!window.confirm(action.dataset.confirmation)) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    })
+);

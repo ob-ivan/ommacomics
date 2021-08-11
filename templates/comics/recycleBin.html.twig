@@ -1,0 +1,36 @@
+{#
+    deletedChapters: Chapter[]
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="text-content">
+        <h1>Recycle bin</h1>
+        <div>
+            {% if deletedChapters is not empty %}
+                {{ include(
+                    'comics/_chapter_list.html.twig',
+                    {
+                        chapters: deletedChapters,
+                        actions: [
+                            {
+                                route: 'restore',
+                                label: 'restore',
+                                confirmation: 'Do you want to restore the chapter?'
+                            },
+                            {
+                                route: 'purge',
+                                label: 'purge',
+                                confirmation: 'Do you want to remove the chapter permanently? You will not be able to undo this action.'
+                            }
+                        ],
+                        links: ['edit'],
+                    }
+                ) }}
+            {% else %}
+                <p>Your recycle bin is empty!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

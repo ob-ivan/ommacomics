@@ -1,14 +1,18 @@
 
-$width: 1000px;
 $pad: 20px;
+$width: 1000px;
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-size: 3vmin;
     margin: 0;
+    text-size-adjust: 100%;
+}
+
+body, button, input {
+    font-size: 3vmin;
 }
 
 .menu {
@@ -33,6 +37,13 @@ body {
 .content {
     margin: 0 auto;
     max-width: $width;
+}
+
+.flash-info {
+    border: 1px solid red;
+    background: yellow;
+    padding: 10px;
+    margin: 10px 0;
 }
 
 .text-content {

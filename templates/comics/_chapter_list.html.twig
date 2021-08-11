@@ -1,6 +1,17 @@
 {#
-    chapters
+    actions?: {
+        route: string
+        label: string
+        confirmation: string
+    }[]
+    chapters: {
+        folder: string
+        displayName?: string
+        createDate: DateTime
+    }[]
+    links?: string[]
 #}
+
 <ul class="chapter-list">
     {% for chapter in chapters %}
         <li>
@@ -13,11 +24,23 @@
                 <div>
                     {{ chapter.createDate.format('Y-m-d H:i:s') }}
                 </div>
-                <div>
-                    <a href="{{ path('edit', { folder: chapter.folder }) }}">
-                        Edit
-                    </a>
-                </div>
+                {% for action in actions ?? [] %}
+                    <div>
+                        <a  class="chapter-list__action"
+                            data-confirmation="{{ action.confirmation }}"
+                            href="{{ path(action.route, { folder: chapter.folder }) }}"
+                        >
+                            {{ action.label }}
+                        </a>
+                    </div>
+                {% endfor %}
+                {% for link in links ?? [] %}
+                    <div>
+                        <a href="{{ path(link, { folder: chapter.folder }) }}">
+                            {{ link }}
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </li>
     {% endfor %}
