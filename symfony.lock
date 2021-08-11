@@ -68,6 +68,12 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.5"
+    },
+    "laminas/laminas-code": {
+        "version": "4.4.2"
+    },
     "nikic/php-parser": {
         "version": "v4.0.3"
     },
@@ -84,6 +90,9 @@
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/event-dispatcher": {
         "version": "1.0.0"
     },
     "psr/log": {
@@ -203,6 +212,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.5"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.4"
+    },
     "symfony/phpunit-bridge": {
         "version": "3.3",
         "recipe": {
@@ -239,11 +251,17 @@
     "symfony/polyfill-php80": {
         "version": "v1.23.0"
     },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
+    },
     "symfony/profiler-pack": {
         "version": "v1.0.3"
     },
     "symfony/property-access": {
         "version": "v4.0.4"
+    },
+    "symfony/property-info": {
+        "version": "v5.3.4"
     },
     "symfony/routing": {
         "version": "4.0",
