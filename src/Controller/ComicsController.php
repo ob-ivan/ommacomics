@@ -16,7 +16,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Markup;
 use ZipArchive;
 
 class ComicsController extends AbstractController
@@ -118,7 +120,7 @@ class ComicsController extends AbstractController
     /**
      * @Route("/edit/{folder}", name="edit")
      */
-    public function edit($folder, EntityManagerInterface $entityManager, Request $request)
+    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
@@ -143,7 +145,7 @@ class ComicsController extends AbstractController
                     $this->addFlash('info', 'Your changes were saved.');
                     break;
                 case 'delete':
-                    $this->performDeleteAction($entityManager, $chapter);
+                    $this->performDeleteAction($session, $entityManager, $chapter);
                     break;
                 case 'restore':
                     $this->performRestoreAction($entityManager, $chapter);
@@ -279,15 +281,22 @@ class ComicsController extends AbstractController
     }
 
     /**
+     * @param SessionInterface $session
      * @param EntityManagerInterface $entityManager
      * @param Chapter $chapter
      */
-    private function performDeleteAction(EntityManagerInterface $entityManager, Chapter $chapter): void
+    private function performDeleteAction(SessionInterface $session, EntityManagerInterface $entityManager, Chapter $chapter): void
     {
         $chapter->setIsDeleted(true);
         $entityManager->persist($chapter);
         $entityManager->flush();
-        $this->addFlash('info', 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.');
+
+        $message = new Markup(
+            $this->renderView('comics/flash/delete.html.twig', ['chapter' => $chapter]),
+            'UTF-8'
+        );
+
+        $session->getFlashBag()->add('info', $message);
     }
 
     /**
