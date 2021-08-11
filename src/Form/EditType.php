@@ -29,7 +29,10 @@ class EditType extends AbstractType
                 $chapter = $event->getData();
                 $form = $event->getForm();
                 if ($chapter->getIsDeleted()) {
-                    $form->add('restore', SubmitType::class);
+                    $form->add(
+                        'restore',
+                        SubmitType::class
+                    );
                 } else {
                     $form->add(
                         'delete',
