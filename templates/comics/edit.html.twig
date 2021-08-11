@@ -19,5 +19,11 @@
                 'The chapter stays in the recycle bin and can be restored at any time.';
             deleteButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
         }
+
+        const restoreButton = document.getElementById('edit_restore');
+        if (restoreButton) {
+            const confirmation = 'Do you want to restore this chapter from the recycle bin?';
+            restoreButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
+        }
     </script>
 {% endblock %}
