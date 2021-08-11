@@ -143,10 +143,7 @@ class ComicsController extends AbstractController
                     $this->addFlash('info', 'Your changes were saved.');
                     break;
                 case 'delete':
-                    $chapter->setIsDeleted(true);
-                    $entityManager->persist($chapter);
-                    $entityManager->flush();
-                    $this->addFlash('info', 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.');
+                    $this->performDeleteAction($entityManager, $chapter);
                     break;
                 case 'restore':
                     $this->performRestoreAction($entityManager, $chapter);
@@ -279,6 +276,18 @@ class ComicsController extends AbstractController
     private function getChapterFolderAbsolutePath(string $folderName): string
     {
         return $this->getParameter('chapter_directory') . '/' . $folderName;
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Chapter $chapter
+     */
+    private function performDeleteAction(EntityManagerInterface $entityManager, Chapter $chapter): void
+    {
+        $chapter->setIsDeleted(true);
+        $entityManager->persist($chapter);
+        $entityManager->flush();
+        $this->addFlash('info', 'The chapter "' . $chapter->getDisplayName() . '" has been deleted.');
     }
 
     /**
