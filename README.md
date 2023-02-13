@@ -18,7 +18,7 @@ A web-comics hosting engine.
 - Install PHP 8.
 - Install nginx.
 - Clone this repository to a directory.
-- Add the nginx configuration from the ob-ivan/nginx-conf.d repository.
+- Add the nginx configuration from another repository: [ob-ivan/nginx-conf.d](https://github.com/ob-ivan/nginx-conf.d)
 - Set up a webhook: on push to master, execute `public/githook.php`.
 - Install crontab: `* * * * * /path/to/deploy.sh`
 
