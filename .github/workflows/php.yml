@@ -29,6 +29,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
+    - name: Create configuration file '.env'
+      run: echo 'APP_ENV=test' >.env
+
     - name: Allow plugins - symfony/flex
       run: composer config --no-plugins allow-plugins.symfony/flex true
 
