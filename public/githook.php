@@ -1,7 +1,7 @@
 <?php
 const LOG_DIR = __DIR__ . '/../var/log';
 const LOG_PATH = LOG_DIR . '/githook.log';
-const DEPLOY_PATH = __DIR__ . '/../deploy.sh';
+const DEPLOY_REQUEST_PATH = __DIR__ . '/../var/deploy.request';
 
 function writeLog($message)
 {
@@ -37,10 +37,10 @@ writeLog('Received payload, ref = ' . $payload->ref);
 // only execute if pushed to master
 if ($payload->ref === 'refs/heads/master') {
     writeCommit($payload->head_commit);
-    writeLog('Run ' . DEPLOY_PATH);
+    writeLog('Touch ' . DEPLOY_REQUEST_PATH);
     // run deployment script
     try {
-        shell_exec(DEPLOY_PATH . ' >>' . LOG_PATH . ' 2>&1 &');
+        shell_exec('touch ' . DEPLOY_REQUEST_PATH);
     } catch (Exception $e) {
         writeLog('Caught exception = ' . print_r($e, true));
         exit(1);
