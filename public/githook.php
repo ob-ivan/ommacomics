@@ -28,7 +28,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 try {
     $payload = json_decode($_POST['payload']);
 } catch (Exception $e) {
-    exit(0);
+    exit(1);
 }
 
 // log the request
@@ -43,6 +43,8 @@ if ($payload->ref === 'refs/heads/master') {
         shell_exec('./' . DEPLOY_PATH . ' >>' . LOG_PATH . ' 2>&1 &');
     } catch (Exception $e) {
         writeLog('Caught exception = ' . print_r($e, true));
+        exit(1);
     }
 }
 writeLog('Done.');
+exit(0);
