@@ -29,6 +29,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
+    - name: Allow plugins - symfony/flex
+      run: composer config --no-plugins allow-plugins.symfony/flex true
+
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
