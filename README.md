@@ -15,7 +15,10 @@ A web-comics hosting engine.
 - Clone this repository to a directory.
 - Add the nginx configuration from another repository: [ob-ivan/nginx-conf.d](https://github.com/ob-ivan/nginx-conf.d)
 - Set up a webhook: on push to master, execute `public/githook.php`.
-- Install crontab: `* * * * * cd /path/to/repository; ./deploy.sh`
+- Install crontab:
+  ```
+  * * * * * cd $HOME/.nvm; . ./nvm.sh ; cd /path/to/repository; nvm install >/dev/null 2&>1; ./deploy.sh 
+  ```
 
 ## Deployment
 
