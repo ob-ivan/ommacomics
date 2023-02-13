@@ -9,11 +9,6 @@ A web-comics hosting engine.
 - Publish uploaded chapters for the readers.
 - Move chapters to the recycle bin and remove them permanently from there.
 
-## Development
-
-- This project uses `npm` to manage JavaScript dependencies.
-- Please use `npm run dev` and `npm run watch` to create development builds.
-
 ## Installation
 - Install PHP 8.
 - Install nginx.
@@ -28,3 +23,8 @@ A web-comics hosting engine.
 - `composer install`
 - `npm ci`
 - `npm run build`
+
+## Development
+
+- This project uses `npm` to manage JavaScript dependencies.
+- Please use `npm run dev` and `npm run watch` to create development builds.
