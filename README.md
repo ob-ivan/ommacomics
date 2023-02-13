@@ -9,9 +9,13 @@ A web-comics hosting engine.
 - Publish uploaded chapters for the readers.
 - Move chapters to the recycle bin and remove them permanently from there.
 
+## Requirements
+- PHP 8.0
+- nginx
+- node 16.3
+- npm 8.6
+
 ## Installation
-- Install PHP 8.
-- Install nginx.
 - Clone this repository to a directory.
 - Add the nginx configuration from another repository: [ob-ivan/nginx-conf.d](https://github.com/ob-ivan/nginx-conf.d)
 - Set up a webhook: on push to master, execute `public/githook.php`.
