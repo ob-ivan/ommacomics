@@ -14,6 +14,15 @@ A web-comics hosting engine.
 - This project uses `npm` to manage JavaScript dependencies.
 - Please use `npm run dev` and `npm run watch` to create development builds.
 
+## Installation
+- Install PHP 8.
+- Install nginx.
+- Clone this repository to a directory.
+- Add the nginx configuration from the ob-ivan/nginx-conf.d repository.
+- Set up a webhook: on push to master, execute `public/githook.php`.
+- Install crontab:
+      * * * * * /path/to/deploy.sh
+
 ## Deployment
 
 - `git pull`
