@@ -1,28 +1,27 @@
 <?php
+const LOG_DIR = 'log';
+const LOG_PATH = LOG_DIR . '/githook.log';
+const DEPLOY_PATH = 'deploy.sh';
 
-define('LOG_DIR', 'log');
-define('LOG_PATH', LOG_DIR . '/githook.log');
-define('DEPLOY_PATH', 'deploy.sh');
-
-function writeLog ($message)
+function writeLog($message)
 {
-    if (! is_dir (LOG_DIR)) {
-        mkdir (LOG_DIR, 0777, true);
+    if (!is_dir(LOG_DIR)) {
+        mkdir(LOG_DIR, 0777, true);
     }
     file_put_contents(LOG_PATH, '[' . date('Y-m-d H:i:s') . '] ' . $message . "\n", FILE_APPEND);
 }
 
-function writeCommit ($commit)
+function writeCommit($commit)
 {
     writeLog('Details:' . "\n" .
-        'commit '  . $commit->id . "\n" .
+        'commit ' . $commit->id . "\n" .
         'Author: ' . $commit->author->name . '<' . $commit->author->email . '>' . "\n" .
-        'Date: '   . (new DateTime($commit->timestamp))->format('Y-m-d H:i:s P') . "\n" .
+        'Date: ' . (new DateTime($commit->timestamp))->format('Y-m-d H:i:s P') . "\n" .
         str_replace("\n", "\n    ", "\n" . $commit->message)
     );
 }
 
-set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 });
 
