@@ -23,7 +23,7 @@ echo "Deployment started at [$(date)]"
     echo "Deployment runs git-pull at [$(date)]"
     git pull
     echo "Deployment runs 'composer install' at [$(date)]"
-    $COMPOSER install --no-dev
+    $COMPOSER install
     echo "Deployment runs 'npm ci' at [$(date)]"
     npm ci
     echo "Deployment runs 'npm run build' at [$(date)]"
