@@ -1,7 +1,7 @@
 <?php
-const LOG_DIR = 'log';
+const LOG_DIR = __DIR__ . '/../var/log';
 const LOG_PATH = LOG_DIR . '/githook.log';
-const DEPLOY_PATH = 'deploy.sh';
+const DEPLOY_PATH = __DIR__ . '/../deploy.sh';
 
 function writeLog($message)
 {
@@ -40,7 +40,7 @@ if ($payload->ref === 'refs/heads/master') {
     writeLog('Run ' . DEPLOY_PATH);
     // run deployment script
     try {
-        shell_exec('./' . DEPLOY_PATH . ' >>' . LOG_PATH . ' 2>&1 &');
+        shell_exec(DEPLOY_PATH . ' >>' . LOG_PATH . ' 2>&1 &');
     } catch (Exception $e) {
         writeLog('Caught exception = ' . print_r($e, true));
         exit(1);
