@@ -7,7 +7,7 @@ PHP="/usr/bin/php"
 COMPOSER="$PHP $HOME/bin/composer --working-dir=$PWD"
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
-LOCK_PATH="$DIR/deploy.lock"
+LOCK_PATH="$DIR/var/deploy.lock"
 
 if [ -f "$LOCK_PATH" ]; then
     echo "Deployment is locked. Remove file ${LOCK_PATH} to release the lock."
