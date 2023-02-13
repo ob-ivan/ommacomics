@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/sh -eu
 
 # composer requires HOME to be available in environment.
 export HOME="/home/$(whoami)"
