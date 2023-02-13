@@ -2,20 +2,15 @@
 namespace App\Repository;
 
 use App\Entity\Chapter;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * @method Chapter|null find($id, $lockMode = null, $lockVersion = null)
- * @method Chapter|null findOneBy(array $criteria, array $orderBy = null)
- * @method Chapter[]    findAll()
- * @method Chapter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class ChapterRepository extends ServiceEntityRepository
+class ChapterRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $repository;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, Chapter::class);
+        $this->repository = $entityManager->getRepository(Chapter::class);
     }
 
     /**
@@ -25,7 +20,7 @@ class ChapterRepository extends ServiceEntityRepository
      */
     public function findByIsDeleted()
     {
-        return $this->createQueryBuilder('c')
+        return $this->repository->createQueryBuilder('c')
             ->andWhere('c.isDeleted = true')
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)
@@ -41,7 +36,7 @@ class ChapterRepository extends ServiceEntityRepository
      */
     public function getCountIsDeleted()
     {
-        $queryBuilder = $this->createQueryBuilder('c');
+        $queryBuilder = $this->repository->createQueryBuilder('c');
         return $queryBuilder
             ->select($queryBuilder->expr()->count('c.id'))
             ->andWhere('c.isDeleted = true')
@@ -57,7 +52,7 @@ class ChapterRepository extends ServiceEntityRepository
      */
     public function findByIsPublic(bool $isPublic)
     {
-        return $this->createQueryBuilder('c')
+        return $this->repository->createQueryBuilder('c')
             ->andWhere('c.isPublic = :isPublic')
             ->andWhere('c.isDeleted = false')
             ->setParameter('isPublic', $isPublic)
@@ -70,7 +65,7 @@ class ChapterRepository extends ServiceEntityRepository
 
     public function findOneByFolder($folder): ?Chapter
     {
-        return $this->createQueryBuilder('c')
+        return $this->repository->createQueryBuilder('c')
             ->andWhere('c.folder = :folder')
             ->setParameter('folder', $folder)
             ->getQuery()

@@ -16,6 +16,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Markup;
@@ -26,10 +27,8 @@ class ComicsController extends AbstractController
     /**
      * @Route("/", name="main")
      */
-    public function main(EntityManagerInterface $entityManager)
+    public function main(ChapterRepository $chapterRepository)
     {
-        /** @var ChapterRepository $chapterRepository */
-        $chapterRepository = $entityManager->getRepository(Chapter::class);
         $publicChapters = $chapterRepository->findByIsPublic(true);
         $privateChapters = [];
         $recycleBinCount = null;
@@ -86,10 +85,9 @@ class ComicsController extends AbstractController
     /**
      * @Route("/read/{folder}", name="read")
      */
-    public function read($folder, EntityManagerInterface $entityManager)
+    public function read($folder, ChapterRepository $chapterRepository)
     {
-        $chapter = $entityManager->getRepository(Chapter::class)
-            ->findOneByFolder($folder);
+        $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter || $chapter->getIsDeleted()) {
             return $this->renderUnknownChapterError($folder);
         }
@@ -120,15 +118,13 @@ class ComicsController extends AbstractController
     /**
      * @Route("/edit/{folder}", name="edit")
      */
-    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session)
+    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session, ChapterRepository $chapterRepository)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
             'Editing a chapter is only available for authors'
         );
-        /** @type ChapterRepository $chapterRepository */
-        $chapterRepository = $entityManager->getRepository(Chapter::class);
         $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
@@ -166,16 +162,16 @@ class ComicsController extends AbstractController
 
     /**
      * @Route("/recycle-bin", name="recycle-bin")
+     * @param ChapterRepository $chapterRepository
+     * @return Response
      */
-    public function recycleBin(EntityManagerInterface $entityManager)
+    public function recycleBin(ChapterRepository $chapterRepository)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
             'The recycle bin is only available for authors'
         );
-        /** @var ChapterRepository $chapterRepository */
-        $chapterRepository = $entityManager->getRepository(Chapter::class);
         $deletedChapters = $chapterRepository->findByIsDeleted();
         return $this->render(
             'comics/recycleBin.html.twig',
@@ -188,15 +184,13 @@ class ComicsController extends AbstractController
     /**
      * @Route("/restore/{folder}", name="restore")
      */
-    public function restore($folder, EntityManagerInterface $entityManager)
+    public function restore($folder, EntityManagerInterface $entityManager, ChapterRepository $chapterRepository)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
             'Restoring a chapter is only available for authors'
         );
-        /** @type ChapterRepository $chapterRepository */
-        $chapterRepository = $entityManager->getRepository(Chapter::class);
         $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
@@ -210,17 +204,14 @@ class ComicsController extends AbstractController
     /**
      * @Route("/purge/{folder}", name="purge")
      */
-    public function purge($folder, EntityManagerInterface $entityManager)
+    public function purge($folder, EntityManagerInterface $entityManager, ChapterRepository $chapterRepository)
     {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
             'Purging a chapter is only available for authors'
         );
-        /** @type ChapterRepository $chapterRepository */
-        $chapterRepository = $entityManager->getRepository(Chapter::class);
-        $chapter = $chapterRepository
-            ->findOneByFolder($folder);
+        $chapter = $chapterRepository->findOneByFolder($folder);
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
         }
