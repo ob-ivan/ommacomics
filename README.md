@@ -17,7 +17,7 @@ A web-comics hosting engine.
 - Set up a webhook: on push to master, execute `public/githook.php`.
 - Install crontab:
   ```
-  * * * * * cd $HOME/.nvm; . ./nvm.sh ; cd /path/to/repository; nvm install >/dev/null 2&>1; ./deploy.sh 
+  * * * * * cd /home/ivan/.nvm; . ./nvm.sh ; cd /web/comics.ob-ivan.ru; nvm install >/dev/null 2>&1; nvm install-latest-npm >/dev/null 2>&1; ./deploy.sh
   ```
 
 ## Deployment
