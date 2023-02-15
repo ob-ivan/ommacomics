@@ -27,7 +27,7 @@ const readImageHorizontalList = document.querySelectorAll('.read__image--horizon
 let readImageHorizontalVisibleIndex = 1;
 const setReadImageHorizontalStyle = () => readImageHorizontalList.forEach((image: HTMLElement) => {
     const index = parseInt(image.dataset.index);
-    image.style.left = `${(index - readImageHorizontalVisibleIndex) * 100}%`
+    image.style.left = index < readImageHorizontalVisibleIndex ? '-100%' : index > readImageHorizontalVisibleIndex ? '100%' : '0';
     image.style.opacity = `${index === readImageHorizontalVisibleIndex ? 1 : 0}`;
 });
 readContainerHorizontal.addEventListener('click', event => {
