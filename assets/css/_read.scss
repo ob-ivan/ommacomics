@@ -1,11 +1,12 @@
+.read__container {
+    position: relative;
+    width: 100%;
+}
 
-.read-image {
+.read__image {
     display: block;
     width: 100%;
-    &.read-image--horizontal {
-        display: none;
-        &.read-image--visible {
-            display: block;
-        }
+    &.read__image--horizontal {
+        position: absolute;
     }
 }

@@ -7,12 +7,14 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    {% for file in files %}
-        <img
-            alt=""
-            class="read-image {{ isHorizontal ? 'read-image--horizontal' }} {{ loop.first ? 'read-image--visible' }}"
-            data-index="{{ loop.index }}"
-            src="/chapters/{{ folder }}/{{ file }}"
-        />
-    {% endfor %}
+    <div class="read__container {{ isHorizontal ? 'read__container--horizontal' }}">
+        {% for file in files %}
+            <img
+                alt=""
+                class="read__image {{ isHorizontal ? 'read__image--horizontal' }}"
+                data-index="{{ loop.index }}"
+                src="/chapters/{{ folder }}/{{ file }}"
+            />
+        {% endfor %}
+    </div>
 {% endblock %}
