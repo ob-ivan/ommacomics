@@ -23,23 +23,23 @@ document.querySelectorAll('.chapter-list__action').forEach((action: HTMLElement)
 );
 
 const ReadHorizontal = () => {
-    const readHorizontalButtonPrev = document.querySelector('.read__button--prev');
-    const readHorizontalButtonNext = document.querySelector('.read__button--next');
-    const readImageHorizontalList = document.querySelectorAll('.read__image--horizontal');
-    let readImageHorizontalVisibleIndex = 1;
-    const setReadImageHorizontalStyle = () => readImageHorizontalList.forEach((image: HTMLElement) => {
+    const buttonPrev = document.querySelector('.read__button--prev');
+    const buttonNext = document.querySelector('.read__button--next');
+    const imageList = document.querySelectorAll('.read__image--horizontal');
+    let currentIndex = 1;
+    const setImageStyle = () => imageList.forEach((image: HTMLElement) => {
         const index = parseInt(image.dataset.index);
-        image.style.left = index < readImageHorizontalVisibleIndex ? '-100%' : index > readImageHorizontalVisibleIndex ? '100%' : '0';
-        image.style.opacity = `${index === readImageHorizontalVisibleIndex ? 1 : 0}`;
+        image.style.left = index < currentIndex ? '-100%' : index > currentIndex ? '100%' : '0';
+        image.style.opacity = `${index === currentIndex ? 1 : 0}`;
     });
-    readHorizontalButtonPrev.addEventListener('click', () => {
-        readImageHorizontalVisibleIndex = Math.max(readImageHorizontalVisibleIndex - 1, 1);
-        setReadImageHorizontalStyle();
+    buttonPrev.addEventListener('click', () => {
+        currentIndex = Math.max(currentIndex - 1, 1);
+        setImageStyle();
     });
-    readHorizontalButtonNext.addEventListener('click', () => {
-        readImageHorizontalVisibleIndex = Math.min(readImageHorizontalVisibleIndex + 1, readImageHorizontalList.length);
-        setReadImageHorizontalStyle();
+    buttonNext.addEventListener('click', () => {
+        currentIndex = Math.min(currentIndex + 1, imageList.length);
+        setImageStyle();
     });
-    setReadImageHorizontalStyle();
+    setImageStyle();
 };
 ReadHorizontal();
