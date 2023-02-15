@@ -16,5 +16,9 @@
                 src="/chapters/{{ folder }}/{{ file }}"
             />
         {% endfor %}
+        {% if isHorizontal %}
+            <div class="read__button read__button--prev"></div>
+            <div class="read__button read__button--next"></div>
+        {% endif %}
     </div>
 {% endblock %}
