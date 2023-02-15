@@ -1,14 +1,6 @@
 // any CSS you require will output into a single css file (app.css in this case)
 require('../css/app.scss');
-
-document.querySelectorAll('.chapter-list__action').forEach((action: HTMLElement) =>
-    action.addEventListener('click', event => {
-        if (!window.confirm(action.dataset.confirmation)) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    })
-);
+require('./_chapter_list');
 
 const ReadHorizontal = () => {
     const buttonPrev = document.querySelector('.read__button--prev');
