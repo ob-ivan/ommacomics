@@ -25,9 +25,11 @@ document.querySelectorAll('.chapter-list__action').forEach((action: HTMLElement)
 const readContainerHorizontal = document.querySelector('.read__container--horizontal');
 const readImageHorizontalList = document.querySelectorAll('.read__image--horizontal');
 let readImageHorizontalVisibleIndex = 1;
+const setReadImageHorizontalLeft = () => readImageHorizontalList.forEach((image: HTMLElement) => {
+    image.style.left = `${(parseInt(image.dataset.index) - readImageHorizontalVisibleIndex) * 100}%`
+});
 readContainerHorizontal.addEventListener('click', event => {
     ++readImageHorizontalVisibleIndex;
-    readImageHorizontalList.forEach((image: HTMLElement) => {
-        image.style.left = `${(parseInt(image.dataset.index) - readImageHorizontalVisibleIndex) * 100}%`
-    })
+    setReadImageHorizontalLeft();
 });
+setReadImageHorizontalLeft();
