@@ -5,6 +5,7 @@ A web-comics hosting engine.
 ## Supported features
 
 - Upload a chapter for your private preview.
+- Choose reading mode: vertical or horizontal.
 - Edit the display name of a chapter.
 - Publish uploaded chapters for the readers.
 - Move chapters to the recycle bin and remove them permanently from there.
