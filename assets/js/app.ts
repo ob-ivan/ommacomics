@@ -30,6 +30,9 @@ const setReadImageHorizontalLeft = () => readImageHorizontalList.forEach((image:
 });
 readContainerHorizontal.addEventListener('click', event => {
     ++readImageHorizontalVisibleIndex;
+    if (readImageHorizontalVisibleIndex > readImageHorizontalList.length) {
+        readImageHorizontalVisibleIndex = 1;
+    }
     setReadImageHorizontalLeft();
 });
 setReadImageHorizontalLeft();
