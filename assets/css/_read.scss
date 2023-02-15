@@ -1,3 +1,15 @@
+.read__button {
+    height: 100vh;
+    position: absolute;
+    width: 40%;
+    &.read__button--prev {
+        left: 0;
+    }
+    &.read__button--next {
+        right: 0;
+    }
+}
+
 .read__container {
     position: relative;
     width: 100%;
