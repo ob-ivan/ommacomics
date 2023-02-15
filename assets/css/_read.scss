@@ -1,6 +1,9 @@
 .read__container {
     position: relative;
     width: 100%;
+    &.read__container--horizontal {
+        overflow-x: clip;
+    }
 }
 
 .read__image {
