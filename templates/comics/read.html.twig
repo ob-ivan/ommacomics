@@ -1,12 +1,17 @@
 {#
     files: string[]
     folder: string
+    isHorizontal: bool
 #}
 
 {% extends 'base.html.twig' %}
 
 {% block content %}
     {% for file in files %}
-        <img class="read-image" src="/chapters/{{ folder }}/{{ file }}" alt=""/>
+        <img
+            alt=""
+            class="read-image {{ isHorizontal ? 'read-image--horizontal' }} {{ loop.first ? 'read-image--visible' }}"
+            src="/chapters/{{ folder }}/{{ file }}"
+        />
     {% endfor %}
 {% endblock %}

@@ -2,4 +2,10 @@
 .read-image {
     display: block;
     width: 100%;
+    &.read-image--horizontal {
+        display: none;
+        &.read-image--visible {
+            display: block;
+        }
+    }
 }
