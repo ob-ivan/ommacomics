@@ -20,5 +20,29 @@ export const ReadHorizontal = () => {
     buttonPrev.addEventListener('click', movePrev);
     buttonNext.addEventListener('click', moveNext);
 
+    const container = document.querySelector('.read__container--horizontal');
+    let touchstartX = 0;
+    let touchstartY = 0;
+    container.addEventListener('touchstart', function(event: TouchEvent) {
+        touchstartX = event.changedTouches[0].screenX;
+        touchstartY = event.changedTouches[0].screenY;
+    }, false);
+    container.addEventListener('touchend', function(event: TouchEvent) {
+        const touchendX = event.changedTouches[0].screenX;
+        const touchendY = event.changedTouches[0].screenY;
+        const dx = touchendX - touchstartX;
+        const dy = touchendY - touchstartY;
+        if (Math.abs(dx) > 10) {
+            const tan = dy / dx;
+            if (Math.abs(tan) < 1) {
+                if (dx > 0) {
+                    movePrev();
+                } else {
+                    moveNext();
+                }
+            }
+        }
+    }, false);
+
     setImageStyle();
 };
