@@ -21,7 +21,7 @@ class Chapter
      * @ORM\Column(type="string", length=255)
      *
      * @Assert\NotBlank(message="Select ZIP file", groups={ "upload" })
-     * @Assert\File(mimeTypes={ "application/zip" }, groups={ "upload" })
+     * @Assert\File(mimeTypes={ "application/zip", "image/jpeg" }, groups={ "upload" })
      */
     private $folder;
 
