@@ -15,7 +15,14 @@ class UploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('folder', FileType::class, ['label' => 'Select ZIP archive'])
+            ->add('folder', FileType::class, [
+                'attr' => [
+                    'accept' => 'application/zip, image/jpeg',
+                    'multiple' => 'multiple'
+                ],
+                'label' => 'Select ZIP or JPEG file(s)',
+                'multiple' => true,
+            ])
             ->add('displayName', TextType::class, [
                 'label' => 'Display name:',
                 'required' => false,
