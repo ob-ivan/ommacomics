@@ -60,10 +60,13 @@ class ComicsController extends AbstractController
         $form = $this->createForm(UploadType::class, $chapter);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $file */
-            $file = $chapter->getFolder();
+            /** @var UploadedFile[] $files */
+            $files = $chapter->getFolder();
             $folderName = $this->generateUniqueFileName();
-            $this->unzip($file, $this->getChapterFolderAbsolutePath($folderName));
+            $chapterFolderAbsolutePath = $this->getChapterFolderAbsolutePath($folderName);
+            foreach ($files as $file) {
+                $this->unzip($file, $chapterFolderAbsolutePath);
+            }
             $chapter->setFolder($folderName);
             $chapter->setCreateDate(new DateTime());
 
