@@ -21,3 +21,18 @@ document.querySelectorAll('.chapter-list__action').forEach((action: HTMLElement)
         }
     })
 );
+
+const readImageHorizontalList = document.querySelectorAll('.read-image--horizontal');
+let readImageHorizontalVisibleIndex = 1;
+readImageHorizontalList.forEach((target: HTMLElement) =>
+    target.addEventListener('click', event => {
+        readImageHorizontalVisibleIndex = parseInt(target.dataset.index) + 1;
+        readImageHorizontalList.forEach((next: HTMLElement) => {
+            if (parseInt(next.dataset.index) === readImageHorizontalVisibleIndex) {
+                next.classList.add('read-image--visible');
+            } else {
+                next.classList.remove('read-image--visible');
+            }
+        })
+    })
+);

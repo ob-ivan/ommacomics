@@ -11,6 +11,7 @@
         <img
             alt=""
             class="read-image {{ isHorizontal ? 'read-image--horizontal' }} {{ loop.first ? 'read-image--visible' }}"
+            data-index="{{ loop.index }}"
             src="/chapters/{{ folder }}/{{ file }}"
         />
     {% endfor %}
