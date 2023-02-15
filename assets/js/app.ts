@@ -22,7 +22,8 @@ document.querySelectorAll('.chapter-list__action').forEach((action: HTMLElement)
     })
 );
 
-const readContainerHorizontal = document.querySelector('.read__container--horizontal');
+const readHorizontalButtonPrev = document.querySelector('.read__button--prev');
+const readHorizontalButtonNext = document.querySelector('.read__button--next');
 const readImageHorizontalList = document.querySelectorAll('.read__image--horizontal');
 let readImageHorizontalVisibleIndex = 1;
 const setReadImageHorizontalStyle = () => readImageHorizontalList.forEach((image: HTMLElement) => {
@@ -30,11 +31,12 @@ const setReadImageHorizontalStyle = () => readImageHorizontalList.forEach((image
     image.style.left = index < readImageHorizontalVisibleIndex ? '-100%' : index > readImageHorizontalVisibleIndex ? '100%' : '0';
     image.style.opacity = `${index === readImageHorizontalVisibleIndex ? 1 : 0}`;
 });
-readContainerHorizontal.addEventListener('click', event => {
-    ++readImageHorizontalVisibleIndex;
-    if (readImageHorizontalVisibleIndex > readImageHorizontalList.length) {
-        readImageHorizontalVisibleIndex = 1;
-    }
+readHorizontalButtonPrev.addEventListener('click', () => {
+    readImageHorizontalVisibleIndex = Math.max(readImageHorizontalVisibleIndex - 1, 1);
+    setReadImageHorizontalStyle();
+});
+readHorizontalButtonNext.addEventListener('click', () => {
+    readImageHorizontalVisibleIndex = Math.min(readImageHorizontalVisibleIndex + 1, readImageHorizontalList.length);
     setReadImageHorizontalStyle();
 });
 setReadImageHorizontalStyle();
