@@ -45,6 +45,11 @@ class Chapter
      */
     private $displayName;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isHorizontal;
+
     public function getId()
     {
         return $this->id;
@@ -106,6 +111,18 @@ class Chapter
     public function setDisplayName(?string $displayName): self
     {
         $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    public function getIsHorizontal(): ?bool
+    {
+        return $this->isHorizontal;
+    }
+
+    public function setIsHorizontal(bool $isHorizontal): self
+    {
+        $this->isHorizontal = $isHorizontal;
 
         return $this;
     }

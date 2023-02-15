@@ -24,6 +24,10 @@ class UploadType extends AbstractType
                 'label' => 'Publish now? (Your chapter will be available to anyone.)',
                 'required' => false,
             ])
+            ->add('isHorizontal', CheckboxType::class, [
+                'label' => 'Display in horizontal mode?',
+                'required' => false,
+            ])
             ->add('save', SubmitType::class)
         ;
     }

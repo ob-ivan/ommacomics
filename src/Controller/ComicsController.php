@@ -112,6 +112,7 @@ class ComicsController extends AbstractController
                     return is_file("$fullFolderPath/$fileName");
                 }
             ),
+            'isHorizontal' => $chapter->getIsHorizontal(),
         ]);
     }
 

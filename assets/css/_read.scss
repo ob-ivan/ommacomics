@@ -1,5 +1,29 @@
+.read__button {
+    height: 100vh;
+    position: absolute;
+    width: 40%;
+    &.read__button--prev {
+        left: 0;
+    }
+    &.read__button--next {
+        right: 0;
+    }
+}
 
-.read-image {
+.read__container {
+    position: relative;
+    width: 100%;
+    &.read__container--horizontal {
+        height: 100vh;
+        overflow-x: clip;
+    }
+}
+
+.read__image {
     display: block;
     width: 100%;
+    &.read__image--horizontal {
+        position: absolute;
+        transition: all 0.75s;
+    }
 }

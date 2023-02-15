@@ -24,6 +24,10 @@ class EditType extends AbstractType
                 'label' => 'Publish now? (The chapter will be available to anyone.)',
                 'required' => false,
             ])
+            ->add('isHorizontal', CheckboxType::class, [
+                'label' => 'Display in horizontal mode?',
+                'required' => false,
+            ])
             ->add('save', SubmitType::class)
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $chapter = $event->getData();
