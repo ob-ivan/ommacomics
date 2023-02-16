@@ -8,8 +8,8 @@
         <h1>OmmaComics</h1>
         {% if is_granted('ROLE_AUTHOR') %}
             <div class="author-action-list">
-                <a class="author-action-list__item" href="{{ path('upload') }}">Upload a new chapter</a>
-                <a class="author-action-list__item" href="{{ path('recycle-bin') }}">
+                <a href="{{ path('upload') }}">Upload a new chapter</a>
+                <a href="{{ path('recycle-bin') }}">
                     View the recycle bin
                     {% if recycleBinCount is not null %}
                         ({{ recycleBinCount }})
