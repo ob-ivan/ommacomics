@@ -9,6 +9,8 @@
     }
 
     & .chapter-list__name {
+        overflow-x: clip;
+        text-overflow: ellipsis;
         width: 300px;
     }
 }
