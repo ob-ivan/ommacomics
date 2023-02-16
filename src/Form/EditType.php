@@ -17,27 +17,28 @@ class EditType extends AbstractType
     {
         $builder
             ->add('displayName', TextType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Display name:',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('isPublic', CheckboxType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Publish now? (The chapter will be available to anyone.)',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
-                'row_attr' => [
-                    'class' => 'edit-form__checkbox-row',
-                ],
+                'row_attr' => ['class' => 'form__row form__row--checkbox'],
             ])
             ->add('isHorizontal', CheckboxType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Display in horizontal mode?',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
-                'row_attr' => [
-                    'class' => 'edit-form__checkbox-row',
-                ],
+                'row_attr' => ['class' => 'form__row form__row--checkbox'],
             ])
             ->add('save', SubmitType::class, [
-                'row_attr' => [
-                    'class' => 'edit-form__button-row',
-                ],
+                'row_attr' => ['class' => 'form__row form__row--button'],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $chapter = $event->getData();
@@ -48,7 +49,7 @@ class EditType extends AbstractType
                         SubmitType::class,
                         [
                             'attr'     => ['class' => 'edit-restore__button'],
-                            'row_attr' => ['class' => 'edit-restore']
+                            'row_attr' => ['class' => 'edit-restore form__row form__row--button']
                         ]
                     );
                 } else {
@@ -57,7 +58,7 @@ class EditType extends AbstractType
                         SubmitType::class,
                         [
                             'attr'     => ['class' => 'edit-delete__button'],
-                            'row_attr' => ['class' => 'edit-delete']
+                            'row_attr' => ['class' => 'edit-delete form__row form__row--button ']
                         ]
                     );
                 }

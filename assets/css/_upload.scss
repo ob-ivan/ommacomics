@@ -1,12 +1,5 @@
+@import "form";
+
 .upload-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-    justify-content: space-between;
-    & .upload-form__button-row {
-        width: 50%;
-    }
-    & .upload-form__checkbox-row {
-        width: 100%;
-    }
+    @extend .form
 }
