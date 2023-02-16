@@ -1,24 +1,6 @@
-
 .author-action-list {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
     justify-content: flex-start;
-
-    &__item {
-        padding: 1em;
-    }
-}
-
-.chapter-list {
-    padding: 0 40px;
-
-    &__item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1em;
-    }
-
-    &__name {
-        width: 300px;
-    }
 }

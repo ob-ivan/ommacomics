@@ -1,15 +1,16 @@
 {#
-    actions?: {
-        route: string
-        label: string
-        confirmation: string
-    }[]
-    chapters: {
-        folder: string
-        displayName?: string
-        createDate: DateTime
-    }[]
-    links?: string[]
+actions?: {
+    confirmation: string
+    label: string
+    route: string
+}[]
+chapters: {
+    createDate: DateTime
+    displayName?: string
+    folder: string
+    isDeleted: bool
+}[]
+links?: string[]
 #}
 
 <ul class="chapter-list">
@@ -17,18 +18,27 @@
         <li>
             <div class="chapter-list__item">
                 <div class="chapter-list__name">
-                    <a href="{{ path('read', { folder: chapter.folder }) }}">
+                    {% if chapter.isDeleted %}
                         {{ chapter.displayName ?? chapter.folder }}
-                    </a>
+                    {% else %}
+                        <a href="{{ path('read', { folder: chapter.folder }) }}">
+                            {{ chapter.displayName ?? chapter.folder }}
+                        </a>
+                    {% endif %}
                 </div>
-                <div>
-                    {{ chapter.createDate.format('Y-m-d H:i:s') }}
+                <div class="chapter-list__create-date">
+                    <div class="chapter-list__date">
+                        {{ chapter.createDate.format('Y-m-d') }}
+                    </div>
+                    <div class="chapter-list__time">
+                        {{ chapter.createDate.format('H:i:s') }}
+                    </div>
                 </div>
                 {% for action in actions ?? [] %}
                     <div>
-                        <a  class="chapter-list__action"
-                            data-confirmation="{{ action.confirmation }}"
-                            href="{{ path(action.route, { folder: chapter.folder }) }}"
+                        <a class="chapter-list__action"
+                           data-confirmation="{{ action.confirmation }}"
+                           href="{{ path(action.route, { folder: chapter.folder }) }}"
                         >
                             {{ action.label }}
                         </a>

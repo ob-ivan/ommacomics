@@ -18,24 +18,38 @@ class UploadType extends AbstractType
             ->add('folder', FileType::class, [
                 'attr' => [
                     'accept' => 'application/zip, image/jpeg',
-                    'multiple' => 'multiple'
+                    'class' => 'form__input',
+                    'multiple' => 'multiple',
                 ],
                 'label' => 'Select ZIP or JPEG file(s)',
+                'label_attr' => ['class' => 'form__label'],
                 'multiple' => true,
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('displayName', TextType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Display name:',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('isPublic', CheckboxType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Publish now? (Your chapter will be available to anyone.)',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('isHorizontal', CheckboxType::class, [
+                'attr' => ['class' => 'form__input'],
                 'label' => 'Display in horizontal mode?',
+                'label_attr' => ['class' => 'form__label'],
                 'required' => false,
+                'row_attr' => ['class' => 'form__row'],
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'row_attr' => ['class' => 'form__row form__row--button'],
+            ])
         ;
     }
 

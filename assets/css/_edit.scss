@@ -1,3 +1,4 @@
+@import 'form';
 
 .edit-restore {
     display: flex;
@@ -15,4 +16,8 @@
     &__button {
         color: red;
     }
+}
+
+.edit-form {
+    @extend .form
 }

@@ -1,0 +1,36 @@
+.chapter-list {
+    padding: 0 40px;
+
+    & .chapter-list__item {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        &:hover {
+            box-shadow: inset 0 0 0 5rem #eee;
+        }
+    }
+
+    & .chapter-list__name {
+        overflow-x: clip;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
+
+    & .chapter-list__create-date {
+        display: flex;
+        gap: 1rem;
+    }
+
+    @media (max-width: 400px) {
+        & .chapter-list__date {
+            display: none;
+        }
+    }
+
+    @media (max-width: 800px) {
+        & .chapter-list__time {
+            display: none;
+        }
+    }
+}

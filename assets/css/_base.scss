@@ -12,7 +12,12 @@ body {
 }
 
 body, button, input {
-    font-size: 3vmin;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+input[type=checkbox] {
+    transform: scale(2);
 }
 
 .menu {
@@ -20,7 +25,7 @@ body, button, input {
     justify-content: space-between;
     margin: 0 auto;
     max-width: $width + 2 * $pad;
-    padding: 0 $pad;
+    padding: 5px $pad;
 }
 
 .menu__item.menu__item_auth {
