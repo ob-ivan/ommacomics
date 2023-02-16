@@ -26,3 +26,5 @@ folder: string
         {% endif %}
     </div>
 {% endblock %}
+
+{% block title %}{{ chapter.displayName ?? chapter.folder }} - {{ parent() }}{% endblock %}

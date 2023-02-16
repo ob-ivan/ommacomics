@@ -1,3 +1,10 @@
+{#
+chapter: {
+    displayName?: string
+    folder: string
+}
+form: FormView
+#}
 {% extends 'base.html.twig' %}
 
 {% block content %}
@@ -27,3 +34,5 @@
         }
     </script>
 {% endblock %}
+
+{% block title %}Edit "{{ chapter.displayName ?? chapter.folder }}" - {{ parent() }}{% endblock %}

@@ -160,6 +160,7 @@ class ComicsController extends AbstractController
         }
 
         return $this->render('comics/edit.html.twig', [
+            'chapter' => $chapter,
             'form' => $form->createView(),
         ]);
     }
