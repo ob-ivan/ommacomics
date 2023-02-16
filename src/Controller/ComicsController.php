@@ -39,7 +39,7 @@ class ComicsController extends AbstractController
         return $this->render(
             'comics/main.html.twig',
             [
-                'publicChapters'  => $publicChapters,
+                'publicChapters' => $publicChapters,
                 'privateChapters' => $privateChapters,
                 'recycleBinCount' => $recycleBinCount,
             ]
