@@ -16,6 +16,10 @@ body, button, input {
     font-size: 15px;
 }
 
+input[type=checkbox] {
+    transform: scale(2);
+}
+
 .menu {
     display: flex;
     justify-content: space-between;
