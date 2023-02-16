@@ -39,7 +39,7 @@ class ComicsController extends AbstractController
         return $this->render(
             'comics/main.html.twig',
             [
-                'publicChapters'  => $publicChapters,
+                'publicChapters' => $publicChapters,
                 'privateChapters' => $privateChapters,
                 'recycleBinCount' => $recycleBinCount,
             ]
@@ -108,6 +108,7 @@ class ComicsController extends AbstractController
             ]);
         }
         return $this->render('comics/read.html.twig', [
+            'chapter' => $chapter,
             'folder' => $folder,
             'files' => array_filter(
                 scandir($fullFolderPath),
@@ -115,7 +116,6 @@ class ComicsController extends AbstractController
                     return is_file("$fullFolderPath/$fileName");
                 }
             ),
-            'isHorizontal' => $chapter->getIsHorizontal(),
         ]);
     }
 
@@ -160,6 +160,7 @@ class ComicsController extends AbstractController
         }
 
         return $this->render('comics/edit.html.twig', [
+            'chapter' => $chapter,
             'form' => $form->createView(),
         ]);
     }

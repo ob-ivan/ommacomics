@@ -105,9 +105,9 @@ class Chapter
         return $this;
     }
 
-    public function getDisplayName(): ?string
+    public function getDisplayName(): string
     {
-        return $this->displayName;
+        return $this->displayName ?: $this->folder;
     }
 
     public function setDisplayName(?string $displayName): self
