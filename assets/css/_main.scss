@@ -12,13 +12,14 @@
 .chapter-list {
     padding: 0 40px;
 
-    &__item {
+    & .chapter-list__item {
         display: flex;
+        gap: 1rem;
         justify-content: space-between;
-        margin-bottom: 1em;
+        margin-bottom: 1rem;
     }
 
-    &__name {
+    & .chapter-list__name {
         width: 300px;
     }
 }
