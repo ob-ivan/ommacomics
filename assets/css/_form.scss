@@ -23,6 +23,9 @@
         }
         &.form__row--button {
             width: 50%;
+            &:hover {
+                box-shadow: none;
+            }
         }
     }
 }
