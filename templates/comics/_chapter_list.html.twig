@@ -8,6 +8,7 @@ chapters: {
     createDate: DateTime
     displayName?: string
     folder: string
+    isDeleted: bool
 }[]
 links?: string[]
 #}
@@ -17,9 +18,13 @@ links?: string[]
         <li>
             <div class="chapter-list__item">
                 <div class="chapter-list__name">
-                    <a href="{{ path('read', { folder: chapter.folder }) }}">
+                    {% if chapter.isDeleted %}
                         {{ chapter.displayName ?? chapter.folder }}
-                    </a>
+                    {% else %}
+                        <a href="{{ path('read', { folder: chapter.folder }) }}">
+                            {{ chapter.displayName ?? chapter.folder }}
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="chapter-list__create-date">
                     <div class="chapter-list__date">
