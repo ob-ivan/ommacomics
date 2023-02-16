@@ -18,6 +18,9 @@
     & .form__row {
         display: flex;
         width: 100%;
+        &:hover {
+            box-shadow: inset 0 0 0 2rem #eee;
+        }
         &.form__row--button {
             width: 50%;
         }
