@@ -28,14 +28,14 @@ class EditType extends AbstractType
                 'label' => 'Publish now? (The chapter will be available to anyone.)',
                 'label_attr' => ['class' => 'form__label'],
                 'required' => false,
-                'row_attr' => ['class' => 'form__row form__row--checkbox'],
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('isHorizontal', CheckboxType::class, [
                 'attr' => ['class' => 'form__input'],
                 'label' => 'Display in horizontal mode?',
                 'label_attr' => ['class' => 'form__label'],
                 'required' => false,
-                'row_attr' => ['class' => 'form__row form__row--checkbox'],
+                'row_attr' => ['class' => 'form__row'],
             ])
             ->add('save', SubmitType::class, [
                 'row_attr' => ['class' => 'form__row form__row--button'],
