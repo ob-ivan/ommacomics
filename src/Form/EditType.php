@@ -23,12 +23,22 @@ class EditType extends AbstractType
             ->add('isPublic', CheckboxType::class, [
                 'label' => 'Publish now? (The chapter will be available to anyone.)',
                 'required' => false,
+                'row_attr' => [
+                    'class' => 'edit-form__checkbox-row',
+                ],
             ])
             ->add('isHorizontal', CheckboxType::class, [
                 'label' => 'Display in horizontal mode?',
                 'required' => false,
+                'row_attr' => [
+                    'class' => 'edit-form__checkbox-row',
+                ],
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'edit-form__button-row',
+                ],
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $chapter = $event->getData();
                 $form = $event->getForm();

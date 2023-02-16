@@ -28,14 +28,24 @@ class UploadType extends AbstractType
                 'required' => false,
             ])
             ->add('isPublic', CheckboxType::class, [
+                'row_attr' => [
+                    'class' => 'upload-form__checkbox-row',
+                ],
                 'label' => 'Publish now? (Your chapter will be available to anyone.)',
                 'required' => false,
             ])
             ->add('isHorizontal', CheckboxType::class, [
+                'row_attr' => [
+                    'class' => 'upload-form__checkbox-row',
+                ],
                 'label' => 'Display in horizontal mode?',
                 'required' => false,
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'row_attr' => [
+                    'class' => 'upload-form__button-row',
+                ],
+            ])
         ;
     }
 
