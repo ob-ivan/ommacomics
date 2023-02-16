@@ -1,8 +1,11 @@
 .form {
     display: flex;
     flex-wrap: wrap;
-    gap: 1em;
     justify-content: space-between;
+    row-gap: 1em;
+    & .form__input[type=file] {
+        width: 50%;
+    }
     & .form__input[type=text] {
         width: 50%;
     }
