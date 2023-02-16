@@ -14,6 +14,11 @@
         width: 300px;
     }
 
+    & .chapter-list__create-date {
+        display: flex;
+        gap: 1rem;
+    }
+
     @media (max-width: 400px) {
         & .chapter-list__date {
             display: none;
