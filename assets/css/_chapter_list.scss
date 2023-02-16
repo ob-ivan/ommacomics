@@ -1,0 +1,14 @@
+.chapter-list {
+    padding: 0 40px;
+
+    & .chapter-list__item {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    & .chapter-list__name {
+        width: 300px;
+    }
+}
