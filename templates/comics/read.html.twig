@@ -1,7 +1,6 @@
 {#
 chapter: {
-    displayName?: string
-    folder: string
+    displayName: string
     isHorizontal: bool
 }
 files: string[]
@@ -27,4 +26,4 @@ folder: string
     </div>
 {% endblock %}
 
-{% block title %}{{ chapter.displayName ?? chapter.folder }} - {{ parent() }}{% endblock %}
+{% block title %}{{ chapter.displayName }} - {{ parent() }}{% endblock %}

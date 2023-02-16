@@ -6,7 +6,7 @@ actions?: {
 }[]
 chapters: {
     createDate: DateTime
-    displayName?: string
+    displayName: string
     folder: string
     isDeleted: bool
 }[]
@@ -19,10 +19,10 @@ links?: string[]
             <div class="chapter-list__item">
                 <div class="chapter-list__name">
                     {% if chapter.isDeleted %}
-                        {{ chapter.displayName ?? chapter.folder }}
+                        {{ chapter.displayName }}
                     {% else %}
                         <a href="{{ path('read', { folder: chapter.folder }) }}">
-                            {{ chapter.displayName ?? chapter.folder }}
+                            {{ chapter.displayName }}
                         </a>
                     {% endif %}
                 </div>
@@ -37,8 +37,8 @@ links?: string[]
                 {% for action in actions ?? [] %}
                     <div>
                         <a class="chapter-list__action"
-                           data-confirmation="{{ action.confirmation }}"
-                           href="{{ path(action.route, { folder: chapter.folder }) }}"
+                            data-confirmation="{{ action.confirmation }}"
+                            href="{{ path(action.route, { folder: chapter.folder }) }}"
                         >
                             {{ action.label }}
                         </a>

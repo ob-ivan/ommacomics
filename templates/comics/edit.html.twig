@@ -1,7 +1,6 @@
 {#
 chapter: {
-    displayName?: string
-    folder: string
+    displayName: string
 }
 form: FormView
 #}
@@ -35,4 +34,4 @@ form: FormView
     </script>
 {% endblock %}
 
-{% block title %}Edit "{{ chapter.displayName ?? chapter.folder }}" - {{ parent() }}{% endblock %}
+{% block title %}Edit "{{ chapter.displayName }}" - {{ parent() }}{% endblock %}
