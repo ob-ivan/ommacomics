@@ -21,6 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+    justify-content: space-between;
     & .edit-form__button-row {
         width: 50%;
     }
