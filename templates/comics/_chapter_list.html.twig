@@ -22,7 +22,12 @@ links?: string[]
                     </a>
                 </div>
                 <div>
-                    {{ chapter.createDate.format('Y-m-d H:i:s') }}
+                    <div class="chapter-list__date">
+                        {{ chapter.createDate.format('Y-m-d') }}
+                    </div>
+                    <div class="chapter-list__time">
+                        {{ chapter.createDate.format('H:i:s') }}
+                    </div>
                 </div>
                 {% for action in actions ?? [] %}
                     <div>
