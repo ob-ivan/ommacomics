@@ -1,22 +1,26 @@
 {#
+chapter: {
+    displayName?: string
+    folder: string
+    isHorizontal: bool
+}
 files: string[]
 folder: string
-isHorizontal: bool
 #}
 
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <div class="read__container {{ isHorizontal ? 'read__container--horizontal' }}">
+    <div class="read__container {{ chapter.isHorizontal ? 'read__container--horizontal' }}">
         {% for file in files %}
             <img
                 alt=""
-                class="read__image {{ isHorizontal ? 'read__image--horizontal' }}"
+                class="read__image {{ chapter.isHorizontal ? 'read__image--horizontal' }}"
                 data-index="{{ loop.index }}"
                 src="/chapters/{{ folder }}/{{ file }}"
             />
         {% endfor %}
-        {% if isHorizontal %}
+        {% if chapter.isHorizontal %}
             <div class="read__button read__button--prev"></div>
             <div class="read__button read__button--next"></div>
         {% endif %}

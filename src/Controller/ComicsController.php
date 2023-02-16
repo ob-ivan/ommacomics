@@ -108,6 +108,7 @@ class ComicsController extends AbstractController
             ]);
         }
         return $this->render('comics/read.html.twig', [
+            'chapter' => $chapter,
             'folder' => $folder,
             'files' => array_filter(
                 scandir($fullFolderPath),
@@ -115,7 +116,6 @@ class ComicsController extends AbstractController
                     return is_file("$fullFolderPath/$fileName");
                 }
             ),
-            'isHorizontal' => $chapter->getIsHorizontal(),
         ]);
     }
 
