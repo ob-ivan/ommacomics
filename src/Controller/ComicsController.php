@@ -122,8 +122,13 @@ class ComicsController extends AbstractController
     /**
      * @Route("/edit/{folder}", name="edit")
      */
-    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session, ChapterRepository $chapterRepository)
-    {
+    public function edit(
+        $folder,
+        EntityManagerInterface $entityManager,
+        Request $request,
+        SessionInterface $session,
+        ChapterRepository $chapterRepository
+    ) {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
@@ -292,8 +297,11 @@ class ComicsController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Chapter $chapter
      */
-    private function performDeleteAction(SessionInterface $session, EntityManagerInterface $entityManager, Chapter $chapter): void
-    {
+    private function performDeleteAction(
+        SessionInterface $session,
+        EntityManagerInterface $entityManager,
+        Chapter $chapter
+    ): void {
         $chapter->setIsDeleted(true);
         $entityManager->persist($chapter);
         $entityManager->flush();
