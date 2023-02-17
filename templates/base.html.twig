@@ -17,6 +17,8 @@
                             <a href="{{ path('main') }}">Main page</a>
                         </div>
                     {% endblock %}
+                    {% block menu_middle %}
+                    {% endblock %}
                     {% block menu_auth %}
                         <div class="menu__item menu__item_auth">
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
