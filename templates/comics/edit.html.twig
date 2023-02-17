@@ -1,6 +1,7 @@
 {#
 chapter: {
     displayName: string
+    isDeleted: bool
 }
 form: FormView
 #}
@@ -32,6 +33,14 @@ form: FormView
             restoreButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
         }
     </script>
+{% endblock %}
+
+{% block menu_middle %}
+    {% if chapter.isDeleted %}
+        <div class="menu__item">
+            <a href="{{ path('recycle-bin') }}">Recycle bin</a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block title %}Edit "{{ chapter.displayName }}" - {{ parent() }}{% endblock %}
