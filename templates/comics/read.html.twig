@@ -26,4 +26,12 @@ folder: string
     </div>
 {% endblock %}
 
+{% block menu_middle %}
+    {% if is_granted('ROLE_AUTHOR') %}
+        <div class="menu__item">
+            <a href="{{ path('edit', { folder: chapter.folder }) }}">Edit chapter</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
 {% block title %}{{ chapter.displayName }} - {{ parent() }}{% endblock %}

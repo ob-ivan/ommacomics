@@ -101,8 +101,8 @@ class ComicsController extends AbstractController
                 'You are not allowed to read this chapter'
             );
         }
-        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
-        if (!is_dir($fullFolderPath)) {
+        $files = $this->getFolderFiles($folder);
+        if (!$files) {
             return $this->render('comics/error.html.twig', [
                 'message' => 'Folder not found for chapter ' . $folder,
             ]);
@@ -110,20 +110,20 @@ class ComicsController extends AbstractController
         return $this->render('comics/read.html.twig', [
             'chapter' => $chapter,
             'folder' => $folder,
-            'files' => array_filter(
-                scandir($fullFolderPath),
-                function ($fileName) use ($fullFolderPath) {
-                    return is_file("$fullFolderPath/$fileName");
-                }
-            ),
+            'files' => $files,
         ]);
     }
 
     /**
      * @Route("/edit/{folder}", name="edit")
      */
-    public function edit($folder, EntityManagerInterface $entityManager, Request $request, SessionInterface $session, ChapterRepository $chapterRepository)
-    {
+    public function edit(
+        $folder,
+        EntityManagerInterface $entityManager,
+        Request $request,
+        SessionInterface $session,
+        ChapterRepository $chapterRepository
+    ) {
         $this->denyAccessUnlessGranted(
             'ROLE_AUTHOR',
             null,
@@ -159,8 +159,22 @@ class ComicsController extends AbstractController
             ]));
         }
 
+        if (!$chapter->getIsDeleted()) {
+            $files = $this->getFolderFiles($folder);
+            if (!$files) {
+                return $this->render('comics/error.html.twig', [
+                    'message' => 'Folder not found for chapter ' . $folder,
+                ]);
+            }
+            $file = reset($files);
+        } else {
+            $file = null;
+        }
+
         return $this->render('comics/edit.html.twig', [
             'chapter' => $chapter,
+            'file' => $file,
+            'folder' => $folder,
             'form' => $form->createView(),
         ]);
     }
@@ -282,6 +296,24 @@ class ComicsController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $folder
+     * @return string[]|null
+     */
+    private function getFolderFiles(string $folder): ?array
+    {
+        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
+        if (!is_dir($fullFolderPath)) {
+            return null;
+        }
+        return array_filter(
+            scandir($fullFolderPath),
+            function ($fileName) use ($fullFolderPath) {
+                return is_file("$fullFolderPath/$fileName");
+            }
+        );
+    }
+
     private function getChapterFolderAbsolutePath(string $folderName): string
     {
         return $this->getParameter('chapter_directory') . '/' . $folderName;
@@ -292,8 +324,11 @@ class ComicsController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param Chapter $chapter
      */
-    private function performDeleteAction(SessionInterface $session, EntityManagerInterface $entityManager, Chapter $chapter): void
-    {
+    private function performDeleteAction(
+        SessionInterface $session,
+        EntityManagerInterface $entityManager,
+        Chapter $chapter
+    ): void {
         $chapter->setIsDeleted(true);
         $entityManager->persist($chapter);
         $entityManager->flush();

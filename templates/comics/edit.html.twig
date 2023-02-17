@@ -1,7 +1,11 @@
 {#
 chapter: {
     displayName: string
+    folder: string
+    isDeleted: bool
 }
+file?: string
+folder: string
 form: FormView
 #}
 {% extends 'base.html.twig' %}
@@ -13,6 +17,18 @@ form: FormView
         {{ form_widget(form, { attr: { class: 'edit-form' } }) }}
         {{ form_end(form) }}
     </div>
+    {% if file %}
+        <a class="preview" href="{{ path('read', { folder: chapter.folder }) }}">
+            <img
+                alt=""
+                class="preview__image"
+                src="/chapters/{{ folder }}/{{ file }}"
+            />
+            <span class="preview__overlay">
+                <span class="preview__text">Read chapter</span>
+            </span>
+        </a>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
@@ -32,6 +48,14 @@ form: FormView
             restoreButton.addEventListener('click', e => window.confirm(confirmation) || e.preventDefault());
         }
     </script>
+{% endblock %}
+
+{% block menu_middle %}
+    {% if chapter.isDeleted %}
+        <div class="menu__item">
+            <a href="{{ path('recycle-bin') }}">Recycle bin</a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block title %}Edit "{{ chapter.displayName }}" - {{ parent() }}{% endblock %}

@@ -21,3 +21,38 @@
 .edit-form {
     @extend .form
 }
+
+.preview {
+    //noinspection CssInvalidPropertyValue
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    display: block;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    max-height: 500px;
+    overflow-y: clip;
+    position: relative;
+    width: 100%;
+}
+
+.preview__image {
+    display: block;
+    width: 100%;
+}
+
+.preview__overlay {
+    background: rgba(128, 128, 128, 0.5);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    padding-top: 5em;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.preview__text {
+    color: black;
+    font-size: 2rem;
+    height: 2rem;
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+}
