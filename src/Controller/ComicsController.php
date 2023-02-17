@@ -101,8 +101,8 @@ class ComicsController extends AbstractController
                 'You are not allowed to read this chapter'
             );
         }
-        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
-        if (!is_dir($fullFolderPath)) {
+        $files = $this->getFolderFiles($folder);
+        if (!$files) {
             return $this->render('comics/error.html.twig', [
                 'message' => 'Folder not found for chapter ' . $folder,
             ]);
@@ -110,12 +110,7 @@ class ComicsController extends AbstractController
         return $this->render('comics/read.html.twig', [
             'chapter' => $chapter,
             'folder' => $folder,
-            'files' => array_filter(
-                scandir($fullFolderPath),
-                function ($fileName) use ($fullFolderPath) {
-                    return is_file("$fullFolderPath/$fileName");
-                }
-            ),
+            'files' => $files,
         ]);
     }
 
@@ -164,8 +159,18 @@ class ComicsController extends AbstractController
             ]));
         }
 
+        $files = $this->getFolderFiles($folder);
+        if (!$files) {
+            return $this->render('comics/error.html.twig', [
+                'message' => 'Folder not found for chapter ' . $folder,
+            ]);
+        }
+        $file = reset($files);
+
         return $this->render('comics/edit.html.twig', [
             'chapter' => $chapter,
+            'file' => $file,
+            'folder' => $folder,
             'form' => $form->createView(),
         ]);
     }
@@ -285,6 +290,24 @@ class ComicsController extends AbstractController
         return $this->render('comics/error.html.twig', [
             'message' => 'Unknown chapter ' . $folder,
         ]);
+    }
+
+    /**
+     * @param string $folder
+     * @return string[]|null
+     */
+    private function getFolderFiles(string $folder): ?array
+    {
+        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
+        if (!is_dir($fullFolderPath)) {
+            return null;
+        }
+        return array_filter(
+            scandir($fullFolderPath),
+            function ($fileName) use ($fullFolderPath) {
+                return is_file("$fullFolderPath/$fileName");
+            }
+        );
     }
 
     private function getChapterFolderAbsolutePath(string $folderName): string
