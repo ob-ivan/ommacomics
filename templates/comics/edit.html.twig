@@ -1,6 +1,7 @@
 {#
 chapter: {
     displayName: string
+    folder: string
     isDeleted: bool
 }
 file?: string
@@ -17,13 +18,16 @@ form: FormView
         {{ form_end(form) }}
     </div>
     {% if file %}
-        <div class="read__container">
+        <a class="preview" href="{{ path('read', { folder: chapter.folder }) }}">
             <img
                 alt=""
-                class="read__image"
+                class="preview__image"
                 src="/chapters/{{ folder }}/{{ file }}"
             />
-        </div>
+            <span class="preview__overlay">
+                <span class="preview__text">Read chapter</span>
+            </span>
+        </a>
     {% endif %}
 {% endblock %}
 
