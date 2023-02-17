@@ -22,14 +22,28 @@ input[type=checkbox] {
 
 .menu {
     display: flex;
+    gap: 0.5rem;
     justify-content: space-between;
     margin: 0 auto;
     max-width: $width + 2 * $pad;
     padding: 5px $pad;
-}
 
-.menu__item.menu__item_auth {
-    margin-left: auto;
+    .menu__item {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .menu__item:first-child {
+        margin-left: 0;
+        &.menu__item_auth {
+            margin-left: auto;
+        }
+    }
+
+    .menu__item:last-child {
+        margin-right: 0;
+    }
 }
 
 .menu-hr {
