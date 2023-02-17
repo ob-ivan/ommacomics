@@ -3,7 +3,7 @@ chapter: {
     displayName: string
     isDeleted: bool
 }
-file: string
+file?: string
 folder: string
 form: FormView
 #}
@@ -16,13 +16,15 @@ form: FormView
         {{ form_widget(form, { attr: { class: 'edit-form' } }) }}
         {{ form_end(form) }}
     </div>
-    <div class="read__container">
-        <img
-            alt=""
-            class="read__image"
-            src="/chapters/{{ folder }}/{{ file }}"
-        />
-    </div>
+    {% if file %}
+        <div class="read__container">
+            <img
+                alt=""
+                class="read__image"
+                src="/chapters/{{ folder }}/{{ file }}"
+            />
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
