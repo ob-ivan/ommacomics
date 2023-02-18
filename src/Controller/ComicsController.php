@@ -5,6 +5,7 @@ use App\Entity\Chapter;
 use App\Form\EditType;
 use App\Form\UploadType;
 use App\Repository\ChapterRepository;
+use App\Service\ComicsService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FilesystemIterator;
@@ -24,11 +25,11 @@ use ZipArchive;
 
 class ComicsController extends AbstractController
 {
-    private $chapterDirectory;
+    private $comicsService;
 
-    public function __construct(string $chapterDirectory)
+    public function __construct(ComicsService $comicsService)
     {
-        $this->chapterDirectory = $chapterDirectory;
+        $this->comicsService = $comicsService;
     }
 
     /**
@@ -328,7 +329,7 @@ class ComicsController extends AbstractController
 
     private function getChapterFolderAbsolutePath(string $folder): string
     {
-        return $this->chapterDirectory . '/' . $folder;
+        return $this->comicsService->getChapterFolderAbsolutePath($folder);
     }
 
     /**
