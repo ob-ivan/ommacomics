@@ -307,7 +307,7 @@ class ComicsController extends AbstractController
      */
     private function getFolderFiles(string $folder): ?array
     {
-        $fullFolderPath = "{$this->getParameter('chapter_directory')}/{$folder}";
+        $fullFolderPath = $this->getChapterFolderAbsolutePath($folder);
         if (!is_dir($fullFolderPath)) {
             return null;
         }
