@@ -72,7 +72,7 @@ class ComicsController extends AbstractController
             /** @var UploadedFile[] $files */
             $files = $data['files'];
             $folder = $this->generateUniqueFileName();
-            $chapterFolderAbsolutePath = $this->getChapterFolderAbsolutePath($folder);
+            $chapterFolderAbsolutePath = $this->comicsService->getChapterFolderAbsolutePath($folder);
             foreach ($files as $file) {
                 $this->unzip($file, $chapterFolderAbsolutePath);
             }
@@ -256,7 +256,7 @@ class ComicsController extends AbstractController
         $entityManager->remove($chapter);
         $entityManager->flush();
         $filesystem = new Filesystem();
-        $filesystem->remove($this->getChapterFolderAbsolutePath($folder));
+        $filesystem->remove($this->comicsService->getChapterFolderAbsolutePath($folder));
         $this->addFlash('info', 'You have purged the chapter "' . $chapterName . '".');
         return $this->redirect($this->generateUrl('main'));
     }
@@ -315,7 +315,7 @@ class ComicsController extends AbstractController
      */
     private function getFolderFiles(string $folder): ?array
     {
-        $fullFolderPath = $this->getChapterFolderAbsolutePath($folder);
+        $fullFolderPath = $this->comicsService->getChapterFolderAbsolutePath($folder);
         if (!is_dir($fullFolderPath)) {
             return null;
         }
@@ -325,11 +325,6 @@ class ComicsController extends AbstractController
                 return is_file("$fullFolderPath/$fileName");
             }
         );
-    }
-
-    private function getChapterFolderAbsolutePath(string $folder): string
-    {
-        return $this->comicsService->getChapterFolderAbsolutePath($folder);
     }
 
     /**
