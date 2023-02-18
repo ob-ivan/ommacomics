@@ -246,13 +246,14 @@ class ComicsController extends AbstractController
         if (!$chapter) {
             return $this->renderUnknownChapterError($folder);
         }
-        if (!$chapter->getIsDeleted()) {
+        $chapterName = $chapter->getDisplayName();
+        try {
+            $this->comicsService->purge($chapter);
+        } catch (\Exception $exception) {
             return $this->render('comics/error.html.twig', [
-                'message' => 'Cannot purge a chapter that is not deleted!',
+                'message' => $exception->getMessage(),
             ]);
         }
-        $chapterName = $chapter->getDisplayName();
-        $this->comicsService->purge($chapter);
         $this->addFlash('info', 'You have purged the chapter "' . $chapterName . '".');
         return $this->redirect($this->generateUrl('main'));
     }
