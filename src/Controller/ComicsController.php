@@ -24,6 +24,13 @@ use ZipArchive;
 
 class ComicsController extends AbstractController
 {
+    private $chapterDirectory;
+
+    public function __construct(string $chapterDirectory)
+    {
+        $this->chapterDirectory = $chapterDirectory;
+    }
+
     /**
      * @Route("/", name="main")
      */
@@ -321,7 +328,7 @@ class ComicsController extends AbstractController
 
     private function getChapterFolderAbsolutePath(string $folder): string
     {
-        return $this->getParameter('chapter_directory') . '/' . $folder;
+        return $this->chapterDirectory . '/' . $folder;
     }
 
     /**
