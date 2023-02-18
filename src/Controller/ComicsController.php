@@ -63,16 +63,17 @@ class ComicsController extends AbstractController
 
             /** @var UploadedFile[] $files */
             $files = $data['files'];
-            $folderName = $this->generateUniqueFileName();
-            $chapterFolderAbsolutePath = $this->getChapterFolderAbsolutePath($folderName);
+            $folder = $this->generateUniqueFileName();
+            $chapterFolderAbsolutePath = $this->getChapterFolderAbsolutePath($folder);
             foreach ($files as $file) {
                 $this->unzip($file, $chapterFolderAbsolutePath);
             }
 
             $chapter = new Chapter();
+            $chapter->setFolder($folder);
             $chapter->setCreateDate(new DateTime());
-            $chapter->setDisplayName($data['displayName'] ?: $folderName);
-            $chapter->setFolder($folderName);
+            $chapter->setDisplayName($data['displayName'] ?: $folder);
+            $chapter->setFolder($folder);
             $chapter->setDeleteTimestamp(null);
             $chapter->setIsHorizontal($data['isHorizontal']);
             $chapter->setIsPublic($data['isPublic']);
@@ -80,7 +81,7 @@ class ComicsController extends AbstractController
             $entityManager->persist($chapter);
             $entityManager->flush();
             return $this->redirect($this->generateUrl('read', [
-                'folder' => $folderName,
+                'folder' => $folder,
             ]));
         }
 
@@ -318,9 +319,9 @@ class ComicsController extends AbstractController
         );
     }
 
-    private function getChapterFolderAbsolutePath(string $folderName): string
+    private function getChapterFolderAbsolutePath(string $folder): string
     {
-        return $this->getParameter('chapter_directory') . '/' . $folderName;
+        return $this->getParameter('chapter_directory') . '/' . $folder;
     }
 
     /**
