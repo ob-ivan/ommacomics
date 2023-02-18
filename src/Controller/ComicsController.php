@@ -73,7 +73,7 @@ class ComicsController extends AbstractController
             $chapter->setCreateDate(new DateTime());
             $chapter->setDisplayName($data['displayName'] ?: $folderName);
             $chapter->setFolder($folderName);
-            $chapter->setIsDeleted(false);
+            $chapter->setDeleteTimestamp(null);
             $chapter->setIsHorizontal($data['isHorizontal']);
             $chapter->setIsPublic($data['isPublic']);
 
