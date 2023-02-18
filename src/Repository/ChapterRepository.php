@@ -41,7 +41,8 @@ class ChapterRepository
             ->select($queryBuilder->expr()->count('c.id'))
             ->andWhere('c.deleteTimestamp IS NOT NULL')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult()
+        ;
     }
 
     /**
