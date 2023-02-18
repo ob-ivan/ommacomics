@@ -21,7 +21,7 @@ class ChapterRepository
     public function findByIsDeleted()
     {
         return $this->repository->createQueryBuilder('c')
-            ->andWhere('c.isDeleted = true')
+            ->andWhere('c.deleteTimestamp IS NOT NULL')
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
@@ -39,7 +39,7 @@ class ChapterRepository
         $queryBuilder = $this->repository->createQueryBuilder('c');
         return $queryBuilder
             ->select($queryBuilder->expr()->count('c.id'))
-            ->andWhere('c.isDeleted = true')
+            ->andWhere('c.deleteTimestamp IS NOT NULL')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -54,7 +54,7 @@ class ChapterRepository
     {
         return $this->repository->createQueryBuilder('c')
             ->andWhere('c.isPublic = :isPublic')
-            ->andWhere('c.isDeleted = false')
+            ->andWhere('c.deleteTimestamp IS NULL')
             ->setParameter('isPublic', $isPublic)
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)

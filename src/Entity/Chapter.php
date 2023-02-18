@@ -38,9 +38,9 @@ class Chapter
     private $isPublic;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $isDeleted;
+    private $deleteTimestamp;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -93,14 +93,31 @@ class Chapter
         return $this;
     }
 
-    public function getIsDeleted(): ?bool
+    public function getDeleteTimestamp(): ?int
     {
-        return $this->isDeleted;
+        return $this->deleteTimestamp;
     }
 
+    public function setDeleteTimestamp(?int $deleteTimestamp): self
+    {
+        $this->deleteTimestamp = $deleteTimestamp;
+
+        return $this;
+    }
+
+    public function getIsDeleted(): ?bool
+    {
+        return $this->deleteTimestamp !== null;
+    }
+
+    /**
+     * @deprecated Use setDeleteTimestamp() instead.
+     * @param bool $isDeleted
+     * @return $this
+     */
     public function setIsDeleted(bool $isDeleted): self
     {
-        $this->isDeleted = $isDeleted;
+        $this->deleteTimestamp = $isDeleted ? time() : null;
 
         return $this;
     }
