@@ -13,7 +13,6 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -253,10 +252,7 @@ class ComicsController extends AbstractController
             ]);
         }
         $chapterName = $chapter->getDisplayName();
-        $entityManager->remove($chapter);
-        $entityManager->flush();
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->comicsService->getChapterFolderAbsolutePath($folder));
+        $this->comicsService->purge($chapter);
         $this->addFlash('info', 'You have purged the chapter "' . $chapterName . '".');
         return $this->redirect($this->generateUrl('main'));
     }
