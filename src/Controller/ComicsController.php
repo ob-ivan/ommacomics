@@ -6,6 +6,7 @@ use App\Form\EditType;
 use App\Form\UploadType;
 use App\Repository\ChapterRepository;
 use App\Service\ComicsService;
+use App\Service\ComicsServiceException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use FilesystemIterator;
@@ -249,7 +250,7 @@ class ComicsController extends AbstractController
         $chapterName = $chapter->getDisplayName();
         try {
             $this->comicsService->purge($chapter);
-        } catch (\Exception $exception) {
+        } catch (ComicsServiceException $exception) {
             return $this->render('comics/error.html.twig', [
                 'message' => $exception->getMessage(),
             ]);

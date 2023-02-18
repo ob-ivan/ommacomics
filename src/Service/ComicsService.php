@@ -19,7 +19,7 @@ class ComicsService
     public function purge(Chapter $chapter)
     {
         if (!$chapter->getIsDeleted()) {
-            throw new \Exception('Cannot purge a chapter that is not deleted!');
+            throw new ComicsServiceException('Cannot purge a chapter that is not deleted!');
         }
         $this->entityManager->remove($chapter);
         $this->entityManager->flush();
