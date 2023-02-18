@@ -2,6 +2,7 @@
 namespace App\Repository;
 
 use App\Entity\Chapter;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ChapterRepository
@@ -22,6 +23,24 @@ class ChapterRepository
     {
         return $this->repository->createQueryBuilder('c')
             ->andWhere('c.deleteTimestamp IS NOT NULL')
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Return all chapters that were soft-deleted before a given timestamp.
+     *
+     * @param int $maximumTimestamp
+     * @return Chapter[] Returns an array of Chapter objects
+     */
+    public function findByDeleteTimestamp(int $maximumTimestamp): array
+    {
+        return $this->repository->createQueryBuilder('c')
+            ->andWhere('c.deleteTimestamp < :maximumTimestamp')
+            ->setParameter('maximumTimestamp', $maximumTimestamp, Connection::PARAM_INT)
             ->orderBy('c.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
