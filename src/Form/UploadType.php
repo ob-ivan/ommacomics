@@ -15,7 +15,7 @@ class UploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('folder', FileType::class, [
+            ->add('files', FileType::class, [
                 'attr' => [
                     'accept' => 'application/zip, image/jpeg',
                     'class' => 'form__input',
@@ -56,7 +56,6 @@ class UploadType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Chapter::class,
             'validation_groups' => ['upload'],
         ]);
     }
