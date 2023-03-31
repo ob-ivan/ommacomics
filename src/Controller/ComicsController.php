@@ -56,22 +56,26 @@ class ComicsController extends AbstractController
             null,
             'Uploading a chapter is only available for authors'
         );
-        $chapter = new Chapter();
-        $form = $this->createForm(UploadType::class, $chapter);
+        $form = $this->createForm(UploadType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
             /** @var UploadedFile[] $files */
-            $files = $chapter->getFolder();
+            $files = $data['files'];
             $folderName = $this->generateUniqueFileName();
             $chapterFolderAbsolutePath = $this->getChapterFolderAbsolutePath($folderName);
             foreach ($files as $file) {
                 $this->unzip($file, $chapterFolderAbsolutePath);
             }
-            $chapter->setFolder($folderName);
-            $chapter->setCreateDate(new DateTime());
 
-            // @todo: This should be a default value somewhere in Chapter or UploadType!
+            $chapter = new Chapter();
+            $chapter->setCreateDate(new DateTime());
+            $chapter->setDisplayName($data['displayName'] ?: $folderName);
+            $chapter->setFolder($folderName);
             $chapter->setIsDeleted(false);
+            $chapter->setIsHorizontal($data['isHorizontal']);
+            $chapter->setIsPublic($data['isPublic']);
 
             $entityManager->persist($chapter);
             $entityManager->flush();
