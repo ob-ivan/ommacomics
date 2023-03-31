@@ -258,18 +258,18 @@ class ComicsController extends AbstractController
     }
 
     /**
-     * @param SplFileInfo $file Zip archive or an image file.
+     * @param UploadedFile $file Zip archive or an image file.
      * @param string $destination
      * @return void
      */
-    private function unzip(SplFileInfo $file, string $destination)
+    private function unzip(UploadedFile $file, string $destination)
     {
         $zip = new ZipArchive();
         $fileRealPath = $file->getRealPath();
         $openResult = $zip->open($fileRealPath);
         if ($openResult === ZipArchive::ER_NOZIP) {
             $subfile = new File($fileRealPath);
-            $subfile->move($destination);
+            $subfile->move($destination, $file->getClientOriginalName());
             return;
         }
         $zip->extractTo($destination);
@@ -310,12 +310,14 @@ class ComicsController extends AbstractController
         if (!is_dir($fullFolderPath)) {
             return null;
         }
-        return array_filter(
+        $fileNames = array_filter(
             scandir($fullFolderPath),
             function ($fileName) use ($fullFolderPath) {
                 return is_file("$fullFolderPath/$fileName");
             }
         );
+        natsort($fileNames);
+        return $fileNames;
     }
 
     private function getChapterFolderAbsolutePath(string $folderName): string
