@@ -310,12 +310,14 @@ class ComicsController extends AbstractController
         if (!is_dir($fullFolderPath)) {
             return null;
         }
-        return array_filter(
+        $fileNames = array_filter(
             scandir($fullFolderPath),
             function ($fileName) use ($fullFolderPath) {
                 return is_file("$fullFolderPath/$fileName");
             }
         );
+        natsort($fileNames);
+        return $fileNames;
     }
 
     private function getChapterFolderAbsolutePath(string $folderName): string
