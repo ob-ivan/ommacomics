@@ -258,18 +258,18 @@ class ComicsController extends AbstractController
     }
 
     /**
-     * @param SplFileInfo $file Zip archive or an image file.
+     * @param UploadedFile $file Zip archive or an image file.
      * @param string $destination
      * @return void
      */
-    private function unzip(SplFileInfo $file, string $destination)
+    private function unzip(UploadedFile $file, string $destination)
     {
         $zip = new ZipArchive();
         $fileRealPath = $file->getRealPath();
         $openResult = $zip->open($fileRealPath);
         if ($openResult === ZipArchive::ER_NOZIP) {
             $subfile = new File($fileRealPath);
-            $subfile->move($destination);
+            $subfile->move($destination, $file->getClientOriginalName());
             return;
         }
         $zip->extractTo($destination);
