@@ -46,6 +46,10 @@ export const ReadHorizontal = () => {
             return;
         }
 
+        if (window.visualViewport.scale > 1) {
+            return;
+        }
+
         const touchendX = event.changedTouches[0].screenX;
         const touchendY = event.changedTouches[0].screenY;
         const dx = touchendX - touchstartX;
