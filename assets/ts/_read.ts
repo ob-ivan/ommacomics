@@ -21,13 +21,31 @@ export const ReadHorizontal = () => {
     buttonNext.addEventListener('click', moveNext);
 
     const container = document.querySelector('.read__container--horizontal');
+    let touchCount = 0;
+    let touchScrollEnabled = true;
     let touchstartX = 0;
     let touchstartY = 0;
     container.addEventListener('touchstart', function(event: TouchEvent) {
-        touchstartX = event.changedTouches[0].screenX;
-        touchstartY = event.changedTouches[0].screenY;
+        ++touchCount;
+        if (touchCount >= 2) {
+            touchScrollEnabled = false;
+        }
+
+        if (touchScrollEnabled) {
+            touchstartX = event.changedTouches[0].screenX;
+            touchstartY = event.changedTouches[0].screenY;
+        }
     }, false);
     container.addEventListener('touchend', function(event: TouchEvent) {
+        --touchCount;
+        if (!touchScrollEnabled) {
+            if (touchCount === 0) {
+                touchScrollEnabled = true;
+            }
+
+            return;
+        }
+
         const touchendX = event.changedTouches[0].screenX;
         const touchendY = event.changedTouches[0].screenY;
         const dx = touchendX - touchstartX;
