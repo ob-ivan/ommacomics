@@ -20,15 +20,17 @@ form: FormView
     {% if not chapter.isDeleted %}
         <a class="read-chapter" href="{{ path('read', { folder: chapter.folder }) }}">Read chapter</a>
     {% endif %}
-    {% for file in files %}
+    {% if files %}
         <div class="preview">
-            <img
-                alt=""
-                class="preview__image"
-                src="/chapters/{{ folder }}/{{ file }}"
-            />
+            {% for file in files %}
+                <img
+                    alt=""
+                    class="preview__image"
+                    src="/chapters/{{ folder }}/{{ file }}"
+                />
+            {% endfor %}
         </div>
-    {% endfor %}
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
