@@ -4,7 +4,7 @@ chapter: {
     folder: string
     isDeleted: bool
 }
-file?: string
+files?: string[]
 folder: string
 form: FormView
 #}
@@ -17,18 +17,18 @@ form: FormView
         {{ form_widget(form, { attr: { class: 'edit-form' } }) }}
         {{ form_end(form) }}
     </div>
-    {% if file %}
-        <a class="preview" href="{{ path('read', { folder: chapter.folder }) }}">
+    {% if not chapter.isDeleted %}
+        <a class="read-chapter" href="{{ path('read', { folder: chapter.folder }) }}">Read chapter</a>
+    {% endif %}
+    {% for file in files %}
+        <div class="preview">
             <img
                 alt=""
                 class="preview__image"
                 src="/chapters/{{ folder }}/{{ file }}"
             />
-            <span class="preview__overlay">
-                <span class="preview__text">Read chapter</span>
-            </span>
-        </a>
-    {% endif %}
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}

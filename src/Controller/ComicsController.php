@@ -170,14 +170,13 @@ class ComicsController extends AbstractController
                     'message' => 'Folder not found for chapter ' . $folder,
                 ]);
             }
-            $file = reset($files);
         } else {
-            $file = null;
+            $files = null;
         }
 
         return $this->render('comics/edit.html.twig', [
             'chapter' => $chapter,
-            'file' => $file,
+            'files' => $files,
             'folder' => $folder,
             'form' => $form->createView(),
         ]);
