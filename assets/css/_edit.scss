@@ -23,13 +23,15 @@
 }
 
 .preview {
-    display: block;
-    height: 100px;
-    position: relative;
-    width: 100px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .preview__image {
+    border: 1px black solid;
     display: block;
-    width: 100%;
+    margin: 10px;
+    max-height: 200px;
+    max-width: 200px;
+    padding: 10px;
 }
