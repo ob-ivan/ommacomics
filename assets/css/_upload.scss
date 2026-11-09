@@ -1,5 +1,5 @@
-@import "form";
+@use 'form';
 
 .upload-form {
-    @extend .form
+    @extend .form;
 }

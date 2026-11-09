@@ -1,4 +1,4 @@
-@import 'form';
+@use 'form';
 
 .edit-restore {
     display: flex;
@@ -19,7 +19,7 @@
 }
 
 .edit-form {
-    @extend .form
+    @extend .form;
 }
 
 .preview {
